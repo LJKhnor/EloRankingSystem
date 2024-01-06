@@ -38,13 +38,25 @@ Right now the K factor is found by the number of player multiplied by 42 as a co
 
 
 # Project configuration and how to run
+## Setup dev environment 
 In dev proccess we need to use an .env environment. To do this use, in your folder project
-
-
 `py -3 -m venv .venv`
-
-to activate it, use
-
+To activate it, use
 `.venv\Scripts\activate`
+Install dependencies
+Run `pip install -r requirements.txt`
+
+Run `flask run`
 
 you are now in your dev environment
+
+## Install Flask 
+(https://flask.palletsprojects.com/en/3.0.x/installation/)
+
+`pip install Flask`
+
+`set FLASK_APP=__init__.py`
+
+`set FLASK_ENV=development` 
+
+`flask run`
