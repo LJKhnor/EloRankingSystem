@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-
+{% from 'navbar.html' import navbar %}
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -18,16 +18,21 @@
       flex: 1;
     }
   </style>
-  <title>{% block title %}{% endblock %}</title>
+  <title>{% block title %} {% endblock %}</title>
 </head>
 
 <body class="main">
+
   <div class="container is-fluid sectionBase">
-    <p>Body</p>
+    <div class="content">
+      {% block content %} {% endblock %}
+    </div>
   </div>
   <footer class="footer is-fixed-bottom">
     <div class="content has-text-centered">
-      <p>Footer of the app</p>
+      <p>Application created by some ATS developer for their Brutal Magic competition</p>
+      <p>Joachim Lejeune</p>
+      <p>Gilles Rosier</p>
     </div>
   </footer>
   <script src="https://cdn.jsdelivr.net/npm/bulma-toast@2.4.1/dist/bulma-toast.min.js"

@@ -1,17 +1,12 @@
 from elo import *
 
+
 def main():
     i = Implementation()
 
-    players = ["Joachim","Julien Lejeune","Julien Laurent","Christopher","Gilles","Olivier","Kader"]
+    players = ["Joachim", "Julien Lejeune", "Julien Laurent", "Christopher", "Gilles", "Olivier", "Kader"]
 
     i.addPlayers(players)
-
-    # print("players list :", players)
-    # print(i.getPlayers(players))
-    # print(i.getRatingList())
-    # print(i.getPlayer("Joachim"))
-    # print(i.getPlayerRating("Joachim"))
 
     """
     This bunch of data represent the games in the Csv files "MTG-scores" for the period of 28/12/2023 to 03/01/2024
@@ -22,6 +17,5 @@ def main():
     i.recordMatch("Joachim", "Gilles", winner="Joachim")
     i.recordMatch("Julien Lejeune", "Christopher", winner="Julien Lejeune")
     i.recordMatch("Joachim", "Christopher", winner="Christopher")
-
 
     print(i.getRatingList())
