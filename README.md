@@ -1,3 +1,11 @@
+<!-- TOC -->
+# Table of content
+* [EloRankingSystem](#elorankingsystem)
+  * [What is the Elo Rating System?](#what-is-the-elo-rating-system)
+  * [Calculations](#calculations)
+* [Project configuration and how to run](#project-configuration-and-how-to-run)
+<!-- TOC -->
+
 # EloRankingSystem
 A python application for the Elo Rating. It provide a backend system to manage ELO league, and will provide a web application to allow user to create and manage their ELO league.
 
@@ -27,3 +35,16 @@ Supposing Player A was expected to score E<sub>A</sub> points but actually score
 ![alt text](https://wikimedia.org/api/rest_v1/media/math/render/svg/09a11111b433582eccbb22c740486264549d1129)
 
 Right now the K factor is found by the number of player multiplied by 42 as a constant. Working on custom K factors.
+
+
+# Project configuration and how to run
+In dev proccess we need to use an .env environment. To do this use, in your folder project
+
+
+`py -3 -m venv .venv`
+
+to activate it, use
+
+`.venv\Scripts\activate`
+
+you are now in your dev environment

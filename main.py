@@ -28,3 +28,10 @@ i.recordMatch("Joachim", "truelove", "Gilles", "test1", winner="Joachim")
 
 print(i.getPlayersRatingList())
 print(i.getDecksRatingList())
+
+""" 
+This piece of code specify wich of our class is the main project class.
+More information on https://docs.python.org/3/library/__main__.html
+"""
+if __name__ == "__main__":
+    main()
