@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-{% from 'navbar.html' import navbar %}
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -22,8 +21,9 @@
 </head>
 
 <body class="main">
-
-  <div class="container is-fluid sectionBase">
+  {% from 'navbar.html' import navbar %}
+  {{ navbar() }}
+  <div class="container is-fluid" style="">
     <div class="content">
       {% block content %} {% endblock %}
     </div>
