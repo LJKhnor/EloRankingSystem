@@ -1,5 +1,5 @@
 """
-Created 5-18-17
+Created 06-01-2024
 All of the classes for EloPy. The users should only interact with the Implementation class.
 @author - Lejeune Joachim, Rosier Gilles originally create by Hank Hang Kai Sheehan
 """
