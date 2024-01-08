@@ -7,7 +7,7 @@ Documentation : https://flask.palletsprojects.com/en/3.0.x/tutorial/factory/
 import os
 
 from flask import Flask
-from projet.views import index
+from projet.views import index, league
 from testElo import main
 
 
@@ -38,5 +38,6 @@ def create_app(test_config=None):
     #     return 'Hello, and welcome to EloRankingSystem !'
 
     app.add_url_rule("/",view_func=index)
+    app.add_url_rule("/league",view_func=league)
 
     return app

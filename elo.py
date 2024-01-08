@@ -147,7 +147,11 @@ class Implementation:
         lst = []
         for player in self.__getPlayerList():
             lst.append((player.name, round(player.rating, 2)))
-        return sorted(lst, key=lambda player: player[1], reverse=True)
+        lst = sorted(lst, key=lambda player: player[1], reverse=True)
+        str = ""
+        for player in lst:
+            str += " {} {} \n".format(player[0], player[1])
+        return str
 
 
 class _Player:

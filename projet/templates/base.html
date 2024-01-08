@@ -17,12 +17,13 @@
       flex: 1;
     }
   </style>
-  <title>{% block title %} {% endblock %}</title>
+  <title> Elo Ranking System </title>
 </head>
 
 <body class="main">
   {% from 'navbar.html' import navbar %}
   {{ navbar() }}
+  <h1 class="title has-text-centered m-4" input type="text"> Elo Ranking System </h1>
   <div class="container is-fluid" style="">
     <div class="content">
       {% block content %} {% endblock %}
