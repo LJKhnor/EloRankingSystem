@@ -1,37 +1,70 @@
 {% macro navbar() %}
-<nav class="navbar" role="navigation" aria-label="main navigation">
-  <div id="navbarBasicExample" class="navbar-menu is-active" style="display:flex">
-    <div class="navbar-start" style="flex: 1">
-      <ul style="width: 25%">
-        <li>
-          <a class="navbar-item" href="{{url_for('index')}}">
-            <span class="icon-text">
-              <span class="icon"><i class="fas fa-home"></i></span>
-              <span>Home</span>
-            </span>
-          </a>
-        </li>
-        <li>
-          <a class="navbar-item" href="{{url_for('league')}}">
-            <span class="icon-text">
-              <span class="icon"><i class="fas fa-trophy"></i></span>
-              <span>League</span>
-            </span>
-          </a>
-        </li>
-      </ul>
+<!--<nav class="navbar" role="navigation" aria-label="main navigation">-->
+<!--  <div id="navbarBasicExample" class="navbar-menu is-active" style="display:flex">-->
+<!--    <div class="navbar-start" style="flex: 1">-->
+<!--      <ul style="width: 25% ;font-size:small">-->
+<!--        <li>-->
+<!--          <a class="navbar-item" href="{{url_for('index')}}">-->
+<!--            <span class="icon-text">-->
+<!--              <span class="icon"><i class="fas fa-home"></i></span>-->
+<!--              <span>Home</span>-->
+<!--            </span>-->
+<!--          </a>-->
+<!--        </li>-->
+<!--        <li>-->
+<!--          <a class="navbar-item" href="{{url_for('league')}}">-->
+<!--            <span class="icon-text">-->
+<!--              <span class="icon"><i class="fas fa-trophy"></i></span>-->
+<!--              <span>League</span>-->
+<!--            </span>-->
+<!--          </a>-->
+<!--        </li>-->
+<!--      </ul>-->
+<!--    </div>-->
+<!--    <div class="navbar-end">-->
+<!--      <div class="navbar-item">-->
+<!--        <div>-->
+<!--          <a class="button is-primary is-small" href='{{url_for("index")}}'>-->
+<!--            Log in-->
+<!--          </a>-->
+<!--          <a class="button is-warning is-small" href='{{url_for("index")}}'>-->
+<!--            Sign up-->
+<!--          </a>-->
+<!--          <a class="button is-danger is-small" href='{{url_for("index")}}'>-->
+<!--            Log out-->
+<!--          </a>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</nav>-->
+<nav class="navbar" role="navigation" aria-label="main navigation" style="align-self:start">
+  <div class="navbar-brand">
+    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+
+  <div id="navbarBasicExample" class="navbar-menu">
+    <div class="navbar-start">
+      <a class="navbar-item">
+        Home
+      </a>
+      <a class="navbar-item">
+        Documentation
+      </a>
     </div>
+
     <div class="navbar-end">
       <div class="navbar-item">
-        <div>
-          <a class="button is-light" href='{{url_for("index")}}'>
-            Log out
+        <div class="buttons">
+          <a class="button is-primary">
+            <strong>Sign up</strong>
           </a>
-          <a class="button is-light" href='{{url_for("index")}}'>
+          <a class="button is-light">
             Log in
-          </a>
-          <a class="button is-light" href='{{url_for("index")}}'>
-            Sign up
           </a>
         </div>
       </div>
