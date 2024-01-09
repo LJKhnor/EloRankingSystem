@@ -18,4 +18,16 @@ def main():
     i.recordMatch("Julien Lejeune", "Christopher", winner="Julien Lejeune")
     i.recordMatch("Joachim", "Christopher", winner="Christopher")
 
+    i.recordMatch("Julien Lejeune", "Gilles", winner="Julien Lejeune")
+    i.recordMatch("Christopher", "Joachim", winner="Joachim")
+    i.recordMatch("Julien Lejeune", "Joachim", winner="Julien Lejeune")
+    i.recordMatch("Christopher", "Gilles", winner="Christopher")
+    i.recordMatch("Christopher", "Julien Lejeune", winner="Julien Lejeune")
+    i.recordMatch("Gilles", "Joachim", winner="Gilles")
+    i.recordMatch("Gilles", "Julien Lejeune", winner="Julien Lejeune")
+    i.recordMatch("Gilles", "Julien Lejeune", winner="Julien Lejeune")
+    i.recordMatch("Julien Lejeune", "Joachim", winner="Julien Lejeune")
+    # jusqu'au 09-01-2024
+
+
     print(i.getRatingList())
