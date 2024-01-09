@@ -4,6 +4,10 @@
   * [What is the Elo Rating System?](#what-is-the-elo-rating-system)
   * [Calculations](#calculations)
 * [Project configuration and how to run](#project-configuration-and-how-to-run)
+  * [Setup dev environment](#setup-dev-environment-)
+    * [.venv](#venv)
+    * [Install dependencies](#install-dependencies)
+  * [Install Flask](#install-flask-)
 <!-- TOC -->
 
 # EloRankingSystem
@@ -39,11 +43,12 @@ Right now the K factor is found by the number of player multiplied by 42 as a co
 
 # Project configuration and how to run
 ## Setup dev environment 
+### .venv
 In dev proccess we need to use an .env environment. To do this use, in your folder project
 `py -3 -m venv .venv`
 To activate it, use
 `.venv\Scripts\activate`
-Install dependencies
+### Install dependencies
 Run `pip install -r requirements.txt`
 
 Run `flask run`
@@ -54,9 +59,3 @@ you are now in your dev environment
 (https://flask.palletsprojects.com/en/3.0.x/installation/)
 
 `pip install Flask`
-
-`set FLASK_APP=__init__.py`
-
-`set FLASK_ENV=development` 
-
-`flask run`
