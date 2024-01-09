@@ -51,7 +51,7 @@ To activate it, use
 ### Install dependencies
 Run `pip install -r requirements.txt`
 
-Run `flask run`
+Your application will start when you run your run.py file 
 
 you are now in your dev environment
 
