@@ -4,6 +4,10 @@ All of the classes for EloPy. The users should only interact with the Implementa
 @author - Lejeune Joachim, Rosier Gilles originally create by Hank Hang Kai Sheehan
 """
 
+from ..model.deck import _Deck
+from ..model.player import _Player
+
+
 class Implementation:
     """
     A class that represents an implementation of the Elo Rating System
@@ -17,20 +21,20 @@ class Implementation:
         self.base_rating = base_rating
         self.players = []
         self.decks = []
+
     def __getPlayerList(self):
         """
         Returns this implementation's player list.
         @return - the list of all player objects in the implementation.
         """
         return self.players
-    
+
     def __getDeckList(self):
         """
         Returns this implementation's decks list.
         @return - the list of all deck objects in the implementation.
         """
         return self.decks
-
 
     def getPlayer(self, name):
         """
@@ -42,7 +46,7 @@ class Implementation:
             if player.name == name:
                 return player
         return None
-    
+
     def getDeck(self, name):
         """
         Returns the deck in the implementation with the given name.
@@ -59,7 +63,7 @@ class Implementation:
         Return all the players in the list
         """
         return " ,".join(players)
-    
+
     def getDecks(self, decks):
         """
         Return all the decks in the list
@@ -117,7 +121,6 @@ class Implementation:
         for deck in decks:
             self.addDeck(deck, rating)
 
-
     def removePlayer(self, name):
         """
         Adds a new player to the implementation.
@@ -125,14 +128,12 @@ class Implementation:
         """
         self.__getPlayerList().remove(self.getPlayer(name))
 
-    
     def removeDeck(self, name):
         """
         Remove a deck to the implementation.
         @param name - The name to identify a specific deck.
         """
-        self.__getDeckList().remove(self.getDeck(name))   
-
+        self.__getDeckList().remove(self.getDeck(name))
 
     def recordMatch(self, name1, deckName1, name2, deckName2, winner=None, draw=False):
         """
@@ -145,7 +146,7 @@ class Implementation:
 
         for player in self.players:
             players.append(player.name)
-        
+
         for deck in self.decks:
             decks.append(deck.name)
 
@@ -160,7 +161,6 @@ class Implementation:
             expected2 = player2.compareRating(player1)
             deckExpected1 = deck1.compareRating(deck2)
             deckExpected2 = deck2.compareRating(deck1)
-
 
             k = len(self.__getPlayerList()) * 42
             deck_k = len(self.__getDeckList()) * 42
@@ -209,7 +209,6 @@ class Implementation:
                 newDeckRating2 = 0
                 newDeckRating1 = newDeckRating1 - newDeckRating2
 
-
             player1.rating = newRating1
             player2.rating = newRating2
 
@@ -227,7 +226,7 @@ class Implementation:
         """
         player = self.getPlayer(name)
         return player.rating
-    
+
     def getDeckRating(self, name):
         """
         Returns the rating of the player with the given name.
@@ -236,7 +235,7 @@ class Implementation:
         """
         deck = self.getDeck(name)
         return deck.rating
-    
+
     def getPlayersRatingList(self):
         """
         Returns a list of tuples in the form of ({name},{rating})
@@ -246,7 +245,7 @@ class Implementation:
         for player in self.__getPlayerList():
             lst.append((player.name, round(player.rating, 2)))
         return sorted(lst, key=lambda player: player[1], reverse=True)
-    
+
     def getDecksRatingList(self):
         """
         Returns a list of tuples in the form of ({name},{rating})
@@ -256,55 +255,3 @@ class Implementation:
         for deck in self.__getDeckList():
             lst.append((deck.name, round(deck.rating, 2)))
         return sorted(lst, key=lambda deck: deck[1], reverse=True)
-
-
-class _Player:
-    """
-    A class to represent a player in the Elo Rating System
-    """
-
-    def __init__(self, name, rating):
-        """
-        Runs at initialization of class object.
-        @param name - player name
-        @param rating - player rating
-        """
-        self.name = name
-        self.rating = rating
-
-    def compareRating(self, opponent):
-        """
-        Compares the two ratings of the this player and the opponent.
-        @param opponent - the player to compare against.
-        @returns - The expected score between the two players.
-        """
-        return (1 + 10 ** ((opponent.rating - self.rating) / 400.0)) ** -1
-
-    def __str__(self):
-        return "{} ({})".format(self.name, round(self.rating, 2))
-
-class _Deck:
-    """
-    A class to represent a player in the Elo Rating System
-    """
-
-    def __init__(self, name, rating):
-        """
-        Runs at initialization of class object.
-        @param name - player name
-        @param rating - player rating
-        """
-        self.name = name
-        self.rating = rating
-
-    def compareRating(self, opponent):
-        """
-        Compares the two ratings of the this player and the opponent.
-        @param opponent - the player to compare against.
-        @returns - The expected score between the two players.
-        """
-        return (1 + 10 ** ((opponent.rating - self.rating) / 400.0)) ** -1
-
-    def __str__(self):
-        return "{} ({})".format(self.name, round(self.rating, 2))
-    

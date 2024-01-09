@@ -1,11 +1,11 @@
-from elo import *
+from projet.elo.elo import *
+
 
 def main():
     i = Implementation()
 
-    players = ["Joachim","Julien Lejeune","Julien Laurent","Christopher","Gilles","Olivier","Kader"]
-    decks = ["test1","test2","test3","truelove"]
-
+    players = ["Joachim", "Julien Lejeune", "Julien Laurent", "Christopher", "Gilles", "Olivier", "Kader"]
+    decks = ["test1", "test2", "test3", "truelove"]
 
     i.addPlayers(players)
     i.addDecks(decks)
@@ -25,8 +25,6 @@ def main():
     i.recordMatch("Joachim", "truelove", "Gilles", "test1", winner="Joachim")
     # i.recordMatch("Julien Lejeune", "Christopher", winner="Julien Lejeune")
     # i.recordMatch("Joachim", "Christopher", winner="Christopher")
-
-
 
     print(i.getPlayersRatingList())
     print(i.getDecksRatingList())
