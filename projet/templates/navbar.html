@@ -1,0 +1,42 @@
+{% macro navbar() %}
+<nav class="navbar" role="navigation" aria-label="main navigation">
+  <div id="navbarBasicExample" class="navbar-menu is-active" style="display:flex">
+    <div class="navbar-start" style="flex: 1">
+      <ul style="width: 25% ;font-size:small">
+        <li>
+          <a class="navbar-item" href="{{url_for('index')}}">
+            <span class="icon-text">
+              <span class="icon"><i class="fas fa-home"></i></span>
+              <span>Home</span>
+            </span>
+          </a>
+        </li>
+        <li>
+          <a class="navbar-item" href="{{url_for('league')}}">
+            <span class="icon-text">
+              <span class="icon"><i class="fas fa-trophy"></i></span>
+              <span>League</span>
+            </span>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div class="navbar-end">
+      <div class="navbar-item">
+        <div class="buttons are-small">
+          <a class="button is-primary " href='{{url_for("login")}}'>
+            Log in
+          </a>
+          <a class="button is-warning " href='{{url_for("signup")}}'>
+            Sign up
+          </a>
+          <a class="button is-danger " href='{{url_for("login")}}'>
+            Log out
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+
+{% endmacro %}

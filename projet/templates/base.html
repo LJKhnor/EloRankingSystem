@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, max-scale=1, user-scalable=0">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.3/css/bulma.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+  {% block css %}{% endblock %}
   <script src="https://kit.fontawesome.com/a6cd03cfd2.js" crossorigin="anonymous"></script>
+  <script src="projet/static/js/navbar.js"></script>
   <style>
     .main {
       display: flex;
@@ -18,16 +18,30 @@
       flex: 1;
     }
   </style>
-  <title>{% block title %}{% endblock %}</title>
+  <title> Elo Ranking System </title>
 </head>
 
 <body class="main">
-  <div class="container is-fluid sectionBase">
-    <p>Body</p>
+  {% from 'navbar.html' import navbar %}
+  {{ navbar() }}
+  <h1 class="title has-text-centered m-4" input type="text"> Elo Ranking System </h1>
+  <div class="container is-fluid" style="">
+    <div class="content">
+      {% block content %} {% endblock %}
+    </div>
   </div>
-  <footer class="footer is-fixed-bottom">
+  <footer class="footer is-fixed-bottom" style="padding: 0.5rem">
     <div class="content has-text-centered">
-      <p>Footer of the app</p>
+      <p>Application created by some ATS developer for their Brutal Magic competition</p>
+      <p>
+        <strong> Christopher </strong> /
+        <strong> Gilles </strong> /
+        <strong> Joachim </strong> /
+        <strong> Julien Laurent </strong> /
+        <strong> Julien Lejeune </strong>
+      </p>
+      <a href="http://opensource.org/licenses/mit-license.php">MIT</a>. The website content
+      is licensed <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY NC SA 4.0</a>.
     </div>
   </footer>
   <script src="https://cdn.jsdelivr.net/npm/bulma-toast@2.4.1/dist/bulma-toast.min.js"

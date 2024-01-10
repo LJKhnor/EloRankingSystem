@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block css %}
+<link href="league.css" type="text/css" rel="stylesheet" />
+{%  endblock %}
+
+{% block content %}
+<div class="container">
+  <div class="content has-text-centered m-4">
+    <p>League page</p>
+  </div>
+</div>
+<div class="container">
+  <button class="button is-text">Nouvelle league</button>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Nom</th>
+        <th>Création date</th>
+        <th>Informations</th>
+        <th>Nombre de joueurs</th>
+        <th>Active</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+<!--    pour les colonnes a choix multiple, utiliser les dropdowns
+-> https://bulma.io/documentation/components/dropdown/#dropdown-content-->
+    <tbody>
+      <td>League 2024</td>
+      <td>08/01/2024</td>
+      <td>This league is the first that we create with this application</td>
+      <td> 4 </td>
+      <td> oui </td>
+      <td>
+        <div class="buttons are-small">
+          <button class="button is-primary">Infos</button>
+          <button class="button is-light">Edition</button>
+          <button class="button is-danger is-light">supression</button>
+        </div>
+      </td>
+    </tbody>
+  </table>
+</div>
+{% endblock %}
