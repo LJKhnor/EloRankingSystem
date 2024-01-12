@@ -9,7 +9,7 @@ setup(name="EloRankingSystem",
       and will provide a web application to allow user to create and manage their ELO league.
       """,
       author1="Lejeune Joachim (LJKhnor)",
-      author2="",
+      author2="Rosier Gilles (Yukimushide92)",
       author1_email="",
       original_author="Hank Hang Kai Sheehan",
       original_author_email="hanksheehan@gmail.com",
