@@ -9,10 +9,14 @@ import os
 from flask import Flask
 from projet.views import *
 from testElo import main
+from . import db, auth, business
 
 
 def create_app(test_config=None):
+
+    # create the app
     app = Flask(__name__, instance_relative_config=True)
+
     # create and configure the app
     app.config.from_mapping(
         SECRET_KEY='dev',
@@ -31,15 +35,17 @@ def create_app(test_config=None):
         os.makedirs(app.instance_path)
     except OSError:
         pass
+    #
 
-    # a simple page that says hello
-    # @app.route('/hello')
-    # def hello():
-    #     return 'Hello, and welcome to EloRankingSystem !'
+    # initialize the app with the extension
+    db.init_app(app)
 
-    app.add_url_rule("/",view_func=index)
-    app.add_url_rule("/league",view_func=league)
-    app.add_url_rule("/login",view_func=login)
-    app.add_url_rule("/signup",view_func=signup)
+    app.register_blueprint(auth.bp)
+    app.register_blueprint(business.bp)
+
+    app.add_url_rule("/", endpoint="index")
+    app.add_url_rule("/league", endpoint="league")
+    app.add_url_rule("/auth/login", endpoint="login")
+    app.add_url_rule("/auth/signup", endpoint="signup")
 
     return app

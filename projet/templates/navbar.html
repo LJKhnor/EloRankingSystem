@@ -24,15 +24,19 @@
     <div class="navbar-end">
       <div class="navbar-item">
         <div class="buttons are-small">
-          <a class="button is-primary " href='{{url_for("login")}}'>
-            Log in
-          </a>
-          <a class="button is-warning " href='{{url_for("signup")}}'>
-            Sign up
-          </a>
-          <a class="button is-danger " href='{{url_for("login")}}'>
-            Log out
-          </a>
+          {% if g.user %}
+            <a class="button ">{{ g.user['username'] }}</a>
+            <a class="button is-danger " href='{{url_for("auth.logout")}}'>
+              Log out
+            </a>
+          {% else %}
+            <a class="button is-primary " href='{{url_for("login")}}'>
+              Log in
+            </a>
+            <a class="button is-warning " href='{{url_for("signup")}}'>
+              Sign up
+            </a>
+          {% endif %}
         </div>
       </div>
     </div>
