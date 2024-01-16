@@ -3,6 +3,7 @@ from . import auth, business
 from .auth import login_required
 from .db import get_db
 from werkzeug.security import check_password_hash, generate_password_hash
+from .services import UserService
 
 app = Flask(__name__)
 bp_auth = auth.bp
@@ -26,13 +27,9 @@ def league():
 def login():
     """ login page route"""
     if request.method == 'POST':
-        email = request.form['email']
         password = request.form['password']
-        db = get_db()
         error = None
-        user = db.execute(
-            'SELECT * FROM user WHERE email = ?', (email,)
-        ).fetchone()
+        user = UserService.get_user_by_email()
 
         if user is None:
             error = 'Incorrect username.'
@@ -59,24 +56,17 @@ def signup():
         username = request.form['username']
         password = request.form['password']
         email = request.form['email']
-        db = get_db()
         error = None
 
         if not username:
             error = 'Username is required.'
         elif not password:
             error = 'Password is required.'
-        elif db.execute(
-                'SELECT id FROM user WHERE username = ?', (username,)
-        ).fetchone() is not None:
+        elif UserService.get_user_id_by_username() is not None:
             error = f"User {username} is already registered."
 
         if error is None:
-            db.execute(
-                'INSERT INTO user (username, email, password) VALUES (?, ?, ?)',
-                (username, email, generate_password_hash(password))
-            )
-            db.commit()
+            UserService.create_or_update_user(username, generate_password_hash(password), email)
             return redirect(url_for('auth.login'))
 
         flash(error, category='message')

@@ -5,6 +5,7 @@ from flask import (
 )
 from werkzeug.security import check_password_hash, generate_password_hash
 from .db import get_db
+from .services import UserService
 
 """
 A Blueprint is a way to organize a group of views and other related codes. 
@@ -22,9 +23,7 @@ def load_logged_in_user():
     if user_id is None:
         g.user = None
     else:
-        g.user = get_db().execute(
-            'SELECT * FROM user WHERE id = ?', (user_id,)
-        ).fetchone()
+        g.user = UserService.get_user_by_id()
 
 def login_required(view):
     @functools.wraps(view)
