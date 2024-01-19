@@ -4,6 +4,11 @@ drop table if exists deck;
 drop table if exists league;
 drop table if exists team;
 
+drop table if exists deck_league;
+drop table if exists team_player;
+drop table if exists team_league;
+drop table if exists team_match;
+
 drop table if exists match;
 
 create table user (
@@ -20,7 +25,9 @@ create table player (
 
 create table deck (
     id integer primary key autoincrement,
-    name text
+    name text,
+    player_id integer,
+    foreign key (player_id) references player(id)
 );
 
 create table league (
@@ -39,5 +46,43 @@ create table team (
 create table match (
     id integer primary key autoincrement,
     league_id integer,
-    date timestamp
+    date timestamp,
+    foreign key (league_id) references league(id)
+);
+
+create table deck_league (
+    deck_id integer,
+    league_id integer,
+    elo number,
+    primary key (deck_id, league_id),
+    foreign key (deck_id) references deck(id),
+    foreign key (league_id) references league(id)
+);
+
+create table team_player (
+    team_id integer,
+    player_id integer,
+    primary key (player_id, team_id),
+    foreign key (player_id) references player(id),
+    foreign key (team_id) references team_id
+);
+
+create table team_league (
+    team_id integer,
+    league_id integer,
+    elo number,
+    primary key (league_id, team_id),
+    foreign key (league_id) references league(id),
+    foreign key (team_id) references team(id)
+);
+
+create table team_match (
+    team_id integer,
+    match_id integer,
+    elo_before integer,
+    prevision integer,
+    result text,
+    primary key (team_id, match_id),
+    foreign key (team_id) references team(id),
+    foreign key (match_id) references match(id)
 );

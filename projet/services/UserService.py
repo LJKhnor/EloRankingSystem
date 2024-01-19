@@ -24,7 +24,7 @@ def get_user_id_by_username():
 
 
 def create_or_update_user(username, password, email):
-    my_db.execute(
+    db.get_db().execute(
         'INSERT INTO user (username, email, password) VALUES (?, ?, ?)',
         (username, email, password)
     )
