@@ -37,7 +37,7 @@ create table team (
 );
 
 create table match (
-    id primary key autoincrement,
+    id integer primary key autoincrement,
     league_id integer,
     date timestamp
 );
