@@ -9,11 +9,13 @@ app = Flask(__name__)
 bp_auth = auth.bp
 bp_business = business.bp
 
+
 @bp_business.route('/')
 @login_required
 def index():
     """ Root route"""
     return render_template('index.html')
+
 
 @bp_business.route('/league')
 @login_required
@@ -44,11 +46,15 @@ def login():
         flash(error)
 
     return render_template('auth/login.html')
+
+
 @bp_auth.route('/logout')
 def logout():
     """ logout page route"""
     session.clear()
     return redirect(url_for('index'))
+
+
 @bp_auth.route('/signup', methods=('GET', 'POST'))
 def signup():
     """ signup page route"""
@@ -62,7 +68,7 @@ def signup():
             error = 'Username is required.'
         elif not password:
             error = 'Password is required.'
-        elif UserService.get_user_id_by_username() is not None:
+        elif UserService.get_user_by_email() is not None:
             error = f"User {username} is already registered."
 
         if error is None:

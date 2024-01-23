@@ -16,15 +16,8 @@ def get_user_by_email():
     ).fetchone()
 
 
-def get_user_id_by_username():
-    username = request.form['username']
-    return db.get_db().execute(
-        'SELECT id FROM user WHERE username = ?', (username,)
-    ).fetchone()
-
-
 def create_or_update_user(username, password, email):
-    my_db.execute(
+    db.get_db().execute(
         'INSERT INTO user (username, email, password) VALUES (?, ?, ?)',
         (username, email, password)
     )
