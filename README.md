@@ -49,13 +49,36 @@ In dev proccess we need to use an .env environment. To do this use, in your fold
 To activate it, use
 `.venv\Scripts\activate`
 ### Install dependencies
+Flask is a framework that provide a lot of fonctionnalities.
+In this application we use lot of basic fonctionalities, such sqlite for database management, bulma for CSS, ...
+In your .venv you need to install dependencies for those fonctionalities.
+Your requirements.txt is here to concentrate your dependencies.
+You can install those dependencies with the next command.
 Run `pip install -r requirements.txt`
 
-Your application will start when you run your run.py file 
+Your application will start when you run your app.py file with all the configuration put in your .venv
 
 you are now in your dev environment
 
+## Application Structure
+Flask is a framework that provide a lot of fonctionnalities.
+But in a basic approach some file or package need to have their specific name unchanged. ex: static, templates, _ _ init _ _, ...
+
 ## Install Flask 
 (https://flask.palletsprojects.com/en/3.0.x/installation/)
-
 `pip install Flask`
+
+## Install DB
+For this projet we use a simple DB infrastructure ans we need to create team in our projet
+in local.
+Run the init-db command in your .venv
+
+`flask init-db`
+
+You see the now "Initialized the database." in your console.
+
+There will be now a flaskr.sqlite file in the instance folder of your project.
+It's your local DB and you can access it with DB Browser or DBeaver.
+Use .SQlite connection.
+
+Congratulation folks, you have a DB.
