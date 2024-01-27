@@ -1,0 +1,123 @@
+{% extends 'base.html' %}
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/new_match.css') }}"/>
+{% endblock %}
+{% block script %}
+<script type="text/javascript" src="{{url_for('static', filename='js/new_match.js')}}"></script>
+{% endblock %}
+{% block content %}
+<div class="column is-4 is-offset-4">
+    <h3 class="title">Nouveau match 1 vs 1</h3>
+    <div class="box">
+        <form>
+            <div class="field">
+                <div class="control">
+                    <input
+                            class="input"
+                            name="league"
+                            placeholder="Choix de la league"
+                            required
+                    />
+                </div>
+            </div>
+            <div class="field">
+                <div class="control">
+                    <input
+                            class="input"
+                            name="first_player"
+                            placeholder="Joueur 1"
+                            autofocus=""
+                            required
+                    />
+                    <input
+                            class="input"
+                            name="first_player_deck"
+                            placeholder="Deck Joueur 1"
+                            required
+                    />
+                </div>
+            </div>
+            <div class="field">
+                <div class="control">
+                    <input
+                            class="input"
+                            name="second_player"
+                            placeholder="Joueur 2"
+                            autofocus=""
+                            required
+                    />
+                    <input
+                            class="input"
+                            name="second_player_deck"
+                            placeholder="Deck Joueur 2"
+                            required
+                    />
+                </div>
+            </div>
+            <div class="field">
+                <div class="control">
+                    <input
+                            class="input"
+                            name="winner"
+                            placeholder="Vainqueur"
+                            required
+                    />
+                </div>
+            </div>
+
+            <button class="button is-block is-info  is-fullwidth" onclick="onNewCreatedMatch()">
+                Ajouter
+            </button>
+        </form>
+    </div>
+    <!--  dropdown joueur 1-->
+    <div class="dropdown">
+        <div class="dropdown-trigger">
+            <button class="button" aria-haspopup="true" aria-controls="dropdown-menu-player" onclick="toggleDropdown()">
+                <span>Joueur 1</span>
+                <span class="icon is-small">
+          <i class="fas fa-angle-down" aria-hidden="true"></i>
+        </span>
+            </button>
+        </div>
+        <div class="dropdown-menu" id="dropdownMenuJoueur1" role="menu">
+            <div class="dropdown-content">
+                <a href="#" class="dropdown-item">
+                    Dropdown item
+                </a>
+                <a class="dropdown-item">
+                    Other dropdown item
+                </a>
+                <a href="#" class="dropdown-item is-active">
+                    Active dropdown item
+                </a>
+                <a href="#" class="dropdown-item">
+                    Other dropdown item
+                </a>
+                <hr class="dropdown-divider">
+                <a href="#" class="dropdown-item">
+                    With a divider
+                </a>
+            </div>
+        </div>
+    </div>
+    <!--  dropdown joueur 2-->
+    <div class="dropdown">
+        <div class="dropdown-trigger">
+            <button class="button" aria-haspopup="true" aria-controls="dropdown-menu-player" onclick="toggleDropdown()">
+                <span>Joueur 2</span>
+                <span class="icon is-small">
+          <i class="fas fa-angle-down" aria-hidden="true"></i>
+        </span>
+            </button>
+        </div>
+        <div class="dropdown-menu" id="dropdownMenuJoueur2" role="menu">
+            <div class="dropdown-content">
+                <a href="#" class="dropdown-item">
+                    coucou
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

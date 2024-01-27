@@ -32,10 +32,10 @@ create table deck (
 
 create table league (
     id integer primary key autoincrement,
-    label text,
+    label text unique,
     type text,
     start_date timestamp,
-    end_ate timestamp
+    end_date timestamp
 );
 
 create table team (

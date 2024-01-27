@@ -1,9 +1,47 @@
 {% extends 'base.html' %}
 
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/league.css') }}"/>
+{%  endblock %}
+
+{% block script %}
+  <script type="text/javascript" src="{{url_for('static', filename='js/index.js')}}"></script>
+{% endblock %}
+
 {% block content %}
 <div class="container">
   <div class="content has-text-centered m-4">
     <p>Welcome to the home page</p>
+  </div>
+</div>
+<div class="container">
+  <div class="content has-text-centered m-4">
+    <a class="button is-primary " href="{{url_for('new_match')}}">
+      Nouveau match
+    </a>
+    <a class="button is-primary" href="{{url_for('new_league')}}">
+      Nouvelle League
+    </a>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>League</th>
+          <th>Joueur 1</th>
+          <th>Nom du deck Joueur 1</th>
+          <th>Joueur 2</th>
+          <th>Nom du deck Joueur 2</th>
+          <th>Vainqueur</th>
+        </tr>
+      </thead>
+      <tbody>
+        <td>Première league</td>
+        <td>Joachim</td>
+        <td>Urza</td>
+        <td>Julien Lejeune</td>
+        <td>Zombies</td>
+        <td>Julien Lejeune</td>
+      </tbody>
+    </table>
   </div>
 </div>
 {% endblock %}

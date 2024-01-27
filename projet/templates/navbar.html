@@ -1,4 +1,7 @@
 {% macro navbar() %}
+{% block script %}
+  <script type="text/javascript" src="{{url_for('static', filename='js/navbar.js')}}"></script>
+{%  endblock %}
 <nav class="navbar" role="navigation" aria-label="main navigation">
   <div id="navbarBasicExample" class="navbar-menu is-active" style="display:flex">
     <div class="navbar-start" style="flex: 1">

@@ -3,7 +3,7 @@ from . import auth, business
 from .auth import login_required
 from .db import get_db
 from werkzeug.security import check_password_hash, generate_password_hash
-from .services import UserService
+from .services import UserService, league_service
 
 app = Flask(__name__)
 bp_auth = auth.bp
@@ -22,6 +22,42 @@ def index():
 def league():
     """ league page route"""
     return render_template('league.html')
+
+
+@app.route('/new_match')
+def new_match():
+    """ new match route """
+    return render_template('new_match.html')
+
+
+@bp_business.route('/new_league', methods=('GET', 'POST'))
+@login_required
+def new_league():
+    """ new league route """
+
+    if request.method == 'POST':
+        error = None
+        label = request.form['label']
+        type = request.form['type']
+        start_date = request.form['start_date']
+        end_date = request.form['end_date']
+
+        if label is None:
+            error = 'Le nom de league est requis'
+        if type is None:
+            error = 'Le type de league est requis'
+        if start_date is None or end_date is None:
+            error = 'Les dates sont obligatoires'
+        elif league_service.get_league_id_by_name() is not None:
+            error = f"League {label} is already registered."
+
+        if error is None:
+            league_service.set_new_league(label, type, start_date, end_date)
+            return redirect(url_for('index'))
+
+        flash(error)
+
+    return render_template('new_league.html')
 
 
 # Auth route
