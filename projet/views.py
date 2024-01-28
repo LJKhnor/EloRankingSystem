@@ -24,9 +24,13 @@ def league():
     return render_template('league.html')
 
 
-@app.route('/new_match')
+@app.route('/new_match', methods=('GET', 'POST'))
 def new_match():
     """ new match route """
+    if request.method == 'POST':
+        error = None
+        if error is None:
+            return redirect(url_for('index'))
     return render_template('new_match.html')
 
 
