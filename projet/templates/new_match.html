@@ -14,12 +14,12 @@
             <div class="field">
                 <div class="control">
                     <div class="select">
-                        <select name="leagues" id="dropdown-league-choice-button" onclick="searchLeague()">
+                        <select name="leagues" id="dropdown-league-choice-button">
                             <option value="">Choix de la league</option>
                             {% for item in leagues %}
-                                <option value="{{ item }}">
-                                    {{ item }}
-                                </option>
+                            <option value="{{ item }}">
+                                {{ item.label }}
+                            </option>
                             {% endfor %}
                         </select>
                     </div>
@@ -33,7 +33,7 @@
                             <option value="">Joueur 1</option>
                             {% for item in players %}
                                 <option value="{{ item }}">
-                                    {{ item }}
+                                    {{ item.name }}
                                 </option>
                             {% endfor %}
                         </select>
@@ -41,9 +41,9 @@
                     <div class="select">
                         <select name="players1" id="dropdown-deck-player-1-button">
                             <option value="">Deck du Joueur 1</option>
-                            {% for item in players %}
+                            {% for item in decks %}
                                 <option value="{{ item }}">
-                                    {{ item }}
+                                    {{ item.name }}
                                 </option>
                             {% endfor %}
                         </select>
@@ -58,7 +58,7 @@
                             <option value="">Joueur 2</option>
                             {% for item in players %}
                                 <option value="{{ item }}">
-                                    {{ item }}
+                                    {{ item.name }}
                                 </option>
                             {% endfor %}
                         </select>
@@ -66,9 +66,9 @@
                     <div class="select">
                         <select name="players1" id="dropdown-deck-player-2-button">
                             <option value="">Deck du Joueur 2</option>
-                            {% for item in players %}
+                            {% for item in decks %}
                                 <option value="{{ item }}">
-                                    {{ item }}
+                                    {{ item.name }}
                                 </option>
                             {% endfor %}
                         </select>
@@ -83,7 +83,7 @@
                             <option value="">Vainqueur</option>
                             {% for item in players %}
                                 <option value="{{ item }}">
-                                    {{ item }}
+                                    {{ item.name }}
                                 </option>
                             {% endfor %}
                         </select>

@@ -3,7 +3,7 @@ from . import auth, business
 from .auth import login_required
 from .db import get_db
 from werkzeug.security import check_password_hash, generate_password_hash
-from .services import UserService, league_service
+from .services import UserService, league_service, player_service, deck_service
 
 app = Flask(__name__)
 bp_auth = auth.bp
@@ -31,7 +31,12 @@ def new_match():
         error = None
         if error is None:
             return redirect(url_for('index'))
-    return render_template('new_match.html')
+
+    leagues = league_service.get_allleagues()
+    players = player_service.get_all_players()
+    decks = deck_service.get_all_decks()
+
+    return render_template('new_match.html', **locals()) # locals() return all the variable set in the scope of the method
 
 
 @bp_business.route('/new_league', methods=('GET', 'POST'))
@@ -118,3 +123,7 @@ def signup():
         flash(error, category='message')
 
     return render_template('auth/signup.html')
+
+@app.errorhandler(404)
+def page_not_found(error):
+    return render_template('page_not_found.html'), 404
