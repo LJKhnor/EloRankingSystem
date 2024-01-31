@@ -14,7 +14,7 @@
             <div class="field">
                 <div class="control">
                     <div class="select">
-                        <select name="leagues" id="dropdown-league-choice-button">
+                        <select name="league" id="dropdown-league-choice-button">
                             <option value="">Choix de la league</option>
                             {% for item in leagues %}
                             <option value="{{ item }}">
@@ -29,7 +29,7 @@
             <div class="field">
                 <div class="control">
                     <div class="select">
-                        <select name="players1" id="dropdown-player-1-button">
+                        <select name="player_1" id="dropdown-player-1-button">
                             <option value="">Joueur 1</option>
                             {% for item in players %}
                                 <option value="{{ item }}">
@@ -39,7 +39,7 @@
                         </select>
                     </div>
                     <div class="select">
-                        <select name="players1" id="dropdown-deck-player-1-button">
+                        <select name="deck_player_1" id="dropdown-deck-player-1-button">
                             <option value="">Deck du Joueur 1</option>
                             {% for item in decks %}
                                 <option value="{{ item }}">
@@ -54,7 +54,7 @@
             <div class="field">
                 <div class="control">
                     <div class="select">
-                        <select name="players1" id="dropdown-player-2-button">
+                        <select name="player_2" id="dropdown-player-2-button">
                             <option value="">Joueur 2</option>
                             {% for item in players %}
                                 <option value="{{ item }}">
@@ -64,7 +64,7 @@
                         </select>
                     </div>
                     <div class="select">
-                        <select name="players1" id="dropdown-deck-player-2-button">
+                        <select name="deck_player_2" id="dropdown-deck-player-2-button">
                             <option value="">Deck du Joueur 2</option>
                             {% for item in decks %}
                                 <option value="{{ item }}">
@@ -79,7 +79,7 @@
              <div class="field">
                 <div class="control">
                     <div class="select">
-                        <select name="leagues" id="dropdown-winner-button">
+                        <select name="winner" id="dropdown-winner-button">
                             <option value="">Vainqueur</option>
                             {% for item in players %}
                                 <option value="{{ item }}">
@@ -90,110 +90,8 @@
                     </div>
                 </div>
             </div>
-<!--            <div class="field">-->
-<!--                <div class="control">-->
-<!--                    <div class="dropdown">-->
-<!--                        <div class="dropdown-trigger">-->
-<!--                            <button class="button" aria-haspopup="true" id="dropdown-player-1-button" aria-controls="dropdown-menu-player"-->
-<!--                                    onclick="toggleDropdown()">-->
-<!--                                <span>Joueur 1</span>-->
-<!--                                <span class="icon is-small">-->
-<!--                                  <i class="fas fa-angle-down" aria-hidden="true"></i>-->
-<!--                                </span>-->
-<!--                            </button>-->
-<!--                        </div>-->
-<!--                        <div class="dropdown-menu" id="dropdown-player-1" role="menu">-->
-<!--                            <div class="dropdown-content">-->
-<!--                                <div class="dropdown-item">-->
-<!--                                    <p>Joachim</p>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                    <div class="dropdown">-->
-<!--                        <div class="dropdown-trigger">-->
-<!--                            <button class="button" aria-haspopup="true" id="dropdown-deck-player-1-button" aria-controls="dropdown-menu-player"-->
-<!--                                    onclick="toggleDropdown()">-->
-<!--                                <span>Deck du Joueur 1</span>-->
-<!--                                <span class="icon is-small">-->
-<!--                                  <i class="fas fa-angle-down" aria-hidden="true"></i>-->
-<!--                                </span>-->
-<!--                            </button>-->
-<!--                        </div>-->
-<!--                        <div class="dropdown-menu" id="dropdown-deck-player-1" role="menu">-->
-<!--                            <div class="dropdown-content">-->
-<!--                                <div class="dropdown-item">-->
-<!--                                    <p>Urza</p>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--            <div class="field">-->
-<!--                <div class="control">-->
-<!--                    <div class="dropdown">-->
-<!--                        <div class="dropdown-trigger">-->
-<!--                            <button class="button" aria-haspopup="true" id="dropdown-player-2-button" aria-controls="dropdown-menu-player"-->
-<!--                                    onclick="toggleDropdown()">-->
-<!--                                <span>Joueur 2</span>-->
-<!--                                <span class="icon is-small">-->
-<!--                                  <i class="fas fa-angle-down" aria-hidden="true"></i>-->
-<!--                                </span>-->
-<!--                            </button>-->
-<!--                        </div>-->
-<!--                        <div class="dropdown-menu" id="dropdown-player-2" role="menu">-->
-<!--                            <div class="dropdown-content">-->
-<!--                                <div class="dropdown-item">-->
-<!--                                    <p>Julien Lejeune</p>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                    <div class="dropdown">-->
-<!--                        <div class="dropdown-trigger">-->
-<!--                            <button class="button" aria-haspopup="true" id="dropdown-deck-player-2-button" aria-controls="dropdown-menu-player"-->
-<!--                                    onclick="toggleDropdown()">-->
-<!--                                <span>Deck du Joueur 2</span>-->
-<!--                                <span class="icon is-small">-->
-<!--                                  <i class="fas fa-angle-down" aria-hidden="true"></i>-->
-<!--                                </span>-->
-<!--                            </button>-->
-<!--                        </div>-->
-<!--                        <div class="dropdown-menu" id="dropdown-deck-player-2" role="menu">-->
-<!--                            <div class="dropdown-content">-->
-<!--                                <div class="dropdown-item">-->
-<!--                                    <p>Zombies</p>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--            <div class="field">-->
-<!--                <div class="control">-->
-<!--                   <div class="dropdown">-->
-<!--                        <div class="dropdown-trigger">-->
-<!--                            <button class="button" aria-haspopup="true" id="dropdown-winner-button" aria-controls="dropdown-menu-player"-->
-<!--                                    onclick="toggleDropdown()">-->
-<!--                                <span>Vainqueur</span>-->
-<!--                                <span class="icon is-small">-->
-<!--                                  <i class="fas fa-angle-down" aria-hidden="true"></i>-->
-<!--                                </span>-->
-<!--                            </button>-->
-<!--                        </div>-->
-<!--                       <div class="dropdown-menu" id="dropdown-winner" role="menu">-->
-<!--                            <div class="dropdown-content">-->
-<!--                                <div class="dropdown-item">-->
-<!--                                    <p>Joachim</p>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
 
-            <button class="button is-block is-info  is-fullwidth" type="submit" onclick="onNewCreatedMatch()">
+            <button class="button is-block is-info  is-fullwidth">
                 Ajouter
             </button>
         </form>

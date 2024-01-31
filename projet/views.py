@@ -24,13 +24,39 @@ def league():
     return render_template('league.html')
 
 
-@app.route('/new_match', methods=('GET', 'POST'))
+@bp_business.route('/new_match', methods=('GET', 'POST'))
 def new_match():
     """ new match route """
+    test = []
     if request.method == 'POST':
         error = None
+
+        league = request.form['league']
+        player_1 = request.form['player_1']
+        player_2 = request.form['player_2']
+        deck_player_1 = request.form['deck_player_1']
+        deck_player_2 = request.form['deck_player_2']
+        winner = request.form['winner']
+
+        # gérer les erreurs
+        if league is None:
+            error = "Aucune league valide choisie"
+        if player_1 is None:
+            error = "Le joueur 1 choisi n'est pas valide"
+        if player_2 is None:
+            error = "Le joueur 2 choisi n'est pas valide"
+        if deck_player_1 is None:
+            error = "Le deck choisi pour le joueur 1 n'est pas correct"
+        if deck_player_2 is None:
+            error = "Le deck choisi pour le joueur 2 n'est pas correct"
+        if winner is None or winner is not player_1 or winner is not player_2:
+            error = "Le vainqueur choisi n'est pas correct"
+
         if error is None:
+            # match_service.save_new_match(league,player_1,player_2,deck_player_1,deck_player_2,winner)
             return redirect(url_for('index'))
+
+        flash(error)
 
     leagues = league_service.get_allleagues()
     players = player_service.get_all_players()
