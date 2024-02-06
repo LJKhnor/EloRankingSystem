@@ -38,6 +38,22 @@ create table league (
     end_date timestamp
 );
 
+create table player_deck_league (
+    player_1_id integer,
+    player_2_id integer,
+    deck_1_id integer,
+    deck_2_id integer,
+    league_id integer,
+    date timestamp,
+    winner_player_id integer,
+    primary key (player_1_id, player_2_id, deck_1_id, deck_2_id, league_id, date, winner_player_id),
+    foreign key (player_1_id) references player(id),
+    foreign key (player_2_id) references player(id),
+    foreign key (deck_1_id) references deck(id),
+    foreign key (deck_2_id) references deck(id),
+    foreign key (league_id) references league(id)
+);
+
 create table team (
     id integer primary key autoincrement,
     name text

@@ -9,7 +9,7 @@ def get_league_id_by_name():
 
 def get_allleagues():
     leagues = db.get_db().execute(
-        'SELECT l.label FROM league l'
+        'SELECT l.id,l.label FROM league l'
     )
     return leagues.fetchall()
 

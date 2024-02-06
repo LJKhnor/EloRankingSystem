@@ -3,7 +3,7 @@ from . import auth, business
 from .auth import login_required
 from .db import get_db
 from werkzeug.security import check_password_hash, generate_password_hash
-from .services import UserService, league_service, player_service, deck_service
+from .services import UserService, league_service, player_service, deck_service, match_service
 
 app = Flask(__name__)
 bp_auth = auth.bp
@@ -31,29 +31,30 @@ def new_match():
     if request.method == 'POST':
         error = None
 
-        league = request.form['league']
-        player_1 = request.form['player_1']
-        player_2 = request.form['player_2']
-        deck_player_1 = request.form['deck_player_1']
-        deck_player_2 = request.form['deck_player_2']
-        winner = request.form['winner']
+        league_id = request.form['league']
+        date = request.form['start_date']
+        player_1_id = request.form['player_1']
+        player_2_id = request.form['player_2']
+        deck_player_1_id = request.form['deck_player_1']
+        deck_player_2_id = request.form['deck_player_2']
+        winner_id = request.form['winner']
 
         # gérer les erreurs
-        if league is None:
+        if league_id is None:
             error = "Aucune league valide choisie"
-        if player_1 is None:
+        if player_1_id is None:
             error = "Le joueur 1 choisi n'est pas valide"
-        if player_2 is None:
+        if player_2_id is None:
             error = "Le joueur 2 choisi n'est pas valide"
-        if deck_player_1 is None:
+        if deck_player_1_id is None:
             error = "Le deck choisi pour le joueur 1 n'est pas correct"
-        if deck_player_2 is None:
+        if deck_player_2_id is None:
             error = "Le deck choisi pour le joueur 2 n'est pas correct"
-        if winner is None or winner is not player_1 or winner is not player_2:
+        if winner_id is None and (winner_id is not player_1_id or winner is not player_2_id):
             error = "Le vainqueur choisi n'est pas correct"
 
         if error is None:
-            # match_service.save_new_match(league,player_1,player_2,deck_player_1,deck_player_2,winner)
+            # match_service.save_new_match(league_id, date, player_1_id, player_2_id, deck_player_1_id, deck_player_2_id, winner_id)
             return redirect(url_for('index'))
 
         flash(error)

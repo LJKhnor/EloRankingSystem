@@ -1,8 +1,9 @@
 from flask import session, request
 from .. import db
 
-def save_new_match():
+def save_new_match(league_id, date, player_1_id, player_2_id, deck_player_1_id, deck_player_2_id, winner_id):
     db.get_db().execute(
-        'INSERT INTO league (label, type, start_date, end_date) VALUES (?, ?, ?, ?, ?, ?)',
-        (league, player_1, player_2, deck_player_1, deck_player_2, winner)
+        'insert into player_deck_league (player_1_id, player_2_id, deck_player_1_id, deck_player_2_id, league_id, date, winner_player_id) '
+        'values (?, ?, ?, ?, ?, ?, ?)',
+        (player_1_id, player_2_id, deck_player_1_id, deck_player_2_id, league_id, date,winner_id)
     )
