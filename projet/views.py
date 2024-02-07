@@ -14,7 +14,9 @@ bp_business = business.bp
 @login_required
 def index():
     """ Root route"""
-    return render_template('index.html')
+    if request.method == 'GET':
+        matches = match_service.get_last_five_matches()
+    return render_template('index.html',**locals())
 
 
 @bp_business.route('/league')
@@ -27,7 +29,6 @@ def league():
 @bp_business.route('/new_match', methods=('GET', 'POST'))
 def new_match():
     """ new match route """
-    test = []
     if request.method == 'POST':
         error = None
 

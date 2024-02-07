@@ -22,7 +22,8 @@
     <a class="button is-primary" href="{{url_for('new_league')}}">
       Nouvelle League
     </a>
-    <table class="table">
+    <form method="GET" action="/">
+      <table class="table">
       <thead>
         <tr>
           <th>League</th>
@@ -34,14 +35,35 @@
         </tr>
       </thead>
       <tbody>
-        <td>Première league</td>
-        <td>Joachim</td>
-        <td>Urza</td>
-        <td>Julien Lejeune</td>
-        <td>Zombies</td>
-        <td>Julien Lejeune</td>
+        {% for item in matches %}
+          <td value="{{ item.id }}">
+              {{ item.league_id }}
+          </td>
+          <td value="{{ item.id }}">
+              {{ item.player_1_id }}
+          </td>
+          <td value="{{ item.id }}">
+              {{ item.deck_1_id }}
+          </td>
+          <td value="{{ item.id }}">
+              {{ item.player_2_id }}
+          </td>
+          <td value="{{ item.id }}">
+              {{ item.deck_2_id }}
+          </td>
+          <td value="{{ item.id }}">
+              {{ item.winner_player_id }}
+          </td>
+        {% endfor %}
+<!--        <td>Première league</td>-->
+<!--        <td>Joachim</td>-->
+<!--        <td>Urza</td>-->
+<!--        <td>Julien Lejeune</td>-->
+<!--        <td>Zombies</td>-->
+<!--        <td>Julien Lejeune</td>-->
       </tbody>
     </table>
+    </form>
   </div>
 </div>
 {% endblock %}
