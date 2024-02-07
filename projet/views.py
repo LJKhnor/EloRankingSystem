@@ -54,7 +54,7 @@ def new_match():
             error = "Le vainqueur choisi n'est pas correct"
 
         if error is None:
-            # match_service.save_new_match(league_id, date, player_1_id, player_2_id, deck_player_1_id, deck_player_2_id, winner_id)
+            match_service.save_new_match(league_id, date, player_1_id, player_2_id, deck_player_1_id, deck_player_2_id, winner_id)
             return redirect(url_for('index'))
 
         flash(error)
