@@ -10,6 +10,7 @@ def save_new_match(league_id, date, player_1_id, player_2_id, deck_player_1_id, 
     db.get_db().commit()
 
 def get_last_five_matches():
-    return db.get_db().execute(
+    c = db.get_db().cursor()
+    return c.execute(
         'SELECT * FROM player_deck_league p LIMIT 5'
     ).fetchall()

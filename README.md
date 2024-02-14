@@ -65,7 +65,8 @@ Flask is a framework that provide a lot of fonctionnalities.
 But in a basic approach some file or package need to have their specific name unchanged. ex: static, templates, _ _ init _ _, ...
 
 ## Install Flask 
-(https://flask.palletsprojects.com/en/3.0.x/installation/)
+[Documentation](https://flask.palletsprojects.com/en/3.0.x/installation/)
+
 `pip install Flask`
 
 ## Install DB
@@ -82,3 +83,7 @@ It's your local DB and you can access it with DB Browser or DBeaver.
 Use .SQlite connection.
 
 Congratulation folks, you have a DB.
+
+## Feed DB
+In DBeaver or in other way use the script in [start_db.txt](start_db.txt) file to populate your db for the base to start with.
+

@@ -34,8 +34,8 @@
           <th>Vainqueur</th>
         </tr>
       </thead>
-      <tbody>
         {% for item in matches %}
+        <tbody>
           <td value="{{ item.id }}">
               {{ item.league_id }}
           </td>
@@ -54,15 +54,9 @@
           <td value="{{ item.id }}">
               {{ item.winner_player_id }}
           </td>
+        </tbody>
         {% endfor %}
-<!--        <td>Première league</td>-->
-<!--        <td>Joachim</td>-->
-<!--        <td>Urza</td>-->
-<!--        <td>Julien Lejeune</td>-->
-<!--        <td>Zombies</td>-->
-<!--        <td>Julien Lejeune</td>-->
-      </tbody>
-    </table>
+      </table>
     </form>
   </div>
 </div>

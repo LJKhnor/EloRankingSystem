@@ -16,6 +16,9 @@ def index():
     """ Root route"""
     if request.method == 'GET':
         matches = match_service.get_last_five_matches()
+        matches_fetched = []
+        for match in matches:
+            league_name = league_service.get_league_name_by_id(match['player_1_id'])
     return render_template('index.html',**locals())
 
 
