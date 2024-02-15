@@ -8,6 +8,7 @@ drop table if exists deck_league;
 drop table if exists team_player;
 drop table if exists team_league;
 drop table if exists team_match;
+drop table if exists player_deck_league;
 
 drop table if exists match;
 
@@ -32,10 +33,26 @@ create table deck (
 
 create table league (
     id integer primary key autoincrement,
-    label text,
+    label text unique,
     type text,
-    start_date timestamp,
-    end_ate timestamp
+    start_date date,
+    end_date date
+);
+
+create table player_deck_league (
+    player_1_id integer,
+    player_2_id integer,
+    deck_1_id integer,
+    deck_2_id integer,
+    league_id integer,
+    "date" date,
+    winner_player_id integer,
+    primary key (player_1_id, player_2_id, deck_1_id, deck_2_id, league_id, date, winner_player_id),
+    foreign key (player_1_id) references player(id),
+    foreign key (player_2_id) references player(id),
+    foreign key (deck_1_id) references deck(id),
+    foreign key (deck_2_id) references deck(id),
+    foreign key (league_id) references league(id)
 );
 
 create table team (
@@ -46,7 +63,7 @@ create table team (
 create table match (
     id integer primary key autoincrement,
     league_id integer,
-    date timestamp,
+    "date" date,
     foreign key (league_id) references league(id)
 );
 
