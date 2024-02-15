@@ -70,7 +70,7 @@ def new_match():
 
         flash(error)
 
-    leagues = league_service.get_allleagues()
+    leagues = league_service.get_all_leagues()
     players = player_service.get_all_players()
     decks = deck_service.get_all_decks()
 
