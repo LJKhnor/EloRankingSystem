@@ -34,25 +34,25 @@
           <th>Vainqueur</th>
         </tr>
       </thead>
-        {% for item in matches %}
+        {% for item in matches_fetched %}
         <tbody>
-          <td value="{{ item.id }}">
-              {{ item.league_id }}
+          <td value="{{ item.league_name }}">
+              {{ item[0] }}
           </td>
           <td value="{{ item.id }}">
-              {{ item.player_1_id }}
+              {{ item[1] }}
           </td>
           <td value="{{ item.id }}">
-              {{ item.deck_1_id }}
+              {{ item[2] }}
           </td>
           <td value="{{ item.id }}">
-              {{ item.player_2_id }}
+              {{ item[3] }}
           </td>
           <td value="{{ item.id }}">
-              {{ item.deck_2_id }}
+              {{ item[4] }}
           </td>
           <td value="{{ item.id }}">
-              {{ item.winner_player_id }}
+              {{ item[5] }}
           </td>
         </tbody>
         {% endfor %}

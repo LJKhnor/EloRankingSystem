@@ -6,3 +6,8 @@ def get_all_decks():
         'SELECT * FROM deck '
     )
     return decks.fetchall()
+
+def get_deck_by_id(id):
+    return db.get_db().execute(
+        'select * from deck where id = ?', (id,)
+    ).fetchone()
