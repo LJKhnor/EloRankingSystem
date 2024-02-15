@@ -7,6 +7,7 @@ drop table if exists team;
 drop table if exists deck_league;
 drop table if exists team_player;
 drop table if exists team_league;
+drop table if exists player_league;
 drop table if exists team_match;
 drop table if exists player_deck_league;
 
@@ -102,4 +103,13 @@ create table team_match (
     primary key (team_id, match_id),
     foreign key (team_id) references team(id),
     foreign key (match_id) references match(id)
+);
+
+create table player_league (
+    player_id integer,
+    league_id integer,
+    elo number,
+    primary key (league_id, player_id),
+    foreign key (league_id) references league(id),
+    foreign key (player_id) references player(id)
 );

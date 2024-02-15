@@ -4,6 +4,7 @@ from .auth import login_required
 from .db import get_db
 from werkzeug.security import check_password_hash, generate_password_hash
 from .services import UserService, league_service, player_service, deck_service, match_service
+from .elo import elo
 
 app = Flask(__name__)
 bp_auth = auth.bp
@@ -39,6 +40,7 @@ def league():
 @bp_business.route('/new_match', methods=('GET', 'POST'))
 def new_match():
     """ new match route """
+    i = elo.Implementation()
     if request.method == 'POST':
         error = None
 
@@ -49,6 +51,8 @@ def new_match():
         deck_player_1_id = request.form['deck_player_1']
         deck_player_2_id = request.form['deck_player_2']
         winner_id = request.form['winner']
+
+        i.recordMatch(player_1_id,deck_player_1_id,player_2_id,deck_player_2_id, winner=winner_id)
 
         # gérer les erreurs
         if league_id is None:

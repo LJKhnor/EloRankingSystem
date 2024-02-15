@@ -82,8 +82,13 @@ There will be now a flaskr.sqlite file in the instance folder of your project.
 It's your local DB and you can access it with DB Browser or DBeaver.
 Use .SQlite connection.
 
+Warning !
+Sqlite don't allow concurency, so if you want to execute falsk init-db, don't open a connection with DBeaver
+
 Congratulation folks, you have a DB.
 
 ## Feed DB
 In DBeaver or in other way use the script in [start_db.txt](start_db.txt) file to populate your db for the base to start with.
+
+
 
