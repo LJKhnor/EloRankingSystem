@@ -135,7 +135,7 @@ class Implementation:
         """
         self.__getDeckList().remove(self.getDeck(name))
 
-    def recordMatch(self, name1, deckName1, name2, deckName2, winner=None, draw=False):
+    def processEloForMatch(self, name1, deckName1, name2, deckName2, winner=None, draw=False):
         """
         Should be called after a game is played.
         @param name1 - name of the first player.

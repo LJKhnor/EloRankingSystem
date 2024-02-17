@@ -41,6 +41,11 @@ def league():
 def new_match():
     """ new match route """
     i = elo.Implementation()
+
+    leagues = league_service.get_all_leagues()
+    players = player_service.get_all_players()
+    decks = deck_service.get_all_decks()
+
     if request.method == 'POST':
         error = None
 
@@ -51,8 +56,6 @@ def new_match():
         deck_player_1_id = request.form['deck_player_1']
         deck_player_2_id = request.form['deck_player_2']
         winner_id = request.form['winner']
-
-        i.recordMatch(player_1_id,deck_player_1_id,player_2_id,deck_player_2_id, winner=winner_id)
 
         # gérer les erreurs
         if league_id is None:
@@ -69,14 +72,24 @@ def new_match():
             error = "Le vainqueur choisi n'est pas correct"
 
         if error is None:
+            #  rechercher l'elo des 2 joueur pour la league en cours
+            elo_player_1 = player_service.get_elo_by_ids(player_1_id, league_id)
+            elo_player_2 = player_service.get_elo_by_ids(player_2_id, league_id)
+            # insérer dans Implementation les joueur, leur rating et leurs decks
+            i.addPlayer(player_1_id,None if elo_player_1 is None else elo_player_1['elo'])
+            i.addPlayer(player_2_id,None if elo_player_2 is None else elo_player_2['elo'])
+            i.addDeck(deck_player_1_id)
+            i.addDeck(deck_player_2_id)
+
+            i.processEloForMatch(player_1_id,deck_player_1_id,player_2_id,deck_player_2_id,winner=winner_id)
+
+            player_service.save_players_elo(i.getPlayer(player_1_id).name, i.getPlayerRating(player_1_id),league_id)
+            player_service.save_players_elo(i.getPlayer(player_2_id).name, i.getPlayerRating(player_2_id),league_id)
+
             match_service.save_new_match(league_id, date, player_1_id, player_2_id, deck_player_1_id, deck_player_2_id, winner_id)
             return redirect(url_for('index'))
 
         flash(error)
-
-    leagues = league_service.get_all_leagues()
-    players = player_service.get_all_players()
-    decks = deck_service.get_all_decks()
 
     return render_template('new_match.html', **locals()) # locals() return all the variable set in the scope of the method
 
