@@ -30,11 +30,21 @@ def index():
     return render_template('index.html', **locals())
 
 
-@bp_business.route('/league')
+@bp_business.route('/league', methods=('GET', 'POST'))
 @login_required
 def league():
     """ league page route"""
-    return render_template('league.html')
+
+    leagues = league_service.get_all_leagues()
+
+    if request.method == 'POST':
+        league_id = request.form['league']
+        if league_id is not '':
+            rankings = league_service.get_league_ranking(league_id)
+            rankings_html = []
+            for ranking in rankings:
+                rankings_html.append((ranking['name'], round(ranking['elo'],2)))
+    return render_template('league.html', **locals())
 
 
 @bp_business.route('/new_match', methods=('GET', 'POST'))

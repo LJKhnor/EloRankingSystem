@@ -6,39 +6,60 @@
 
 {% block content %}
 <div class="container">
-  <div class="content has-text-centered m-4">
-    <p>League page</p>
-  </div>
+    <div class="content has-text-centered m-4">
+        <p>League page</p>
+    </div>
 </div>
-<div class="container">
-  <button class="button is-text">Nouvelle league</button>
-  <table class="table">
-    <thead>
-      <tr>
-        <th>Nom</th>
-        <th>Création date</th>
-        <th>Informations</th>
-        <th>Nombre de joueurs</th>
-        <th>Active</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-<!--    pour les colonnes a choix multiple, utiliser les dropdowns
--> https://bulma.io/documentation/components/dropdown/#dropdown-content-->
-    <tbody>
-      <td>League 2024</td>
-      <td>08/01/2024</td>
-      <td>This league is the first that we create with this application</td>
-      <td> 4 </td>
-      <td> oui </td>
-      <td>
-        <div class="buttons are-small">
-          <button class="button is-primary">Infos</button>
-          <button class="button is-light">Edition</button>
-          <button class="button is-danger is-light">supression</button>
+<div class="box m-4">
+    <div class="content has-text-centered ">
+        <!--    <button class="button is-text">Nouvelle league</button>-->
+        <form method="POST" action="/league">
+            <div class="field">
+                <div class="control">
+                    <div class="select">
+                        <select name="league" id="dropdown-league-choice-button">
+                            <option value="">Choix de la league</option>
+                            {% for item in leagues %}
+                            <option value="{{ item.id }}">
+                                {{ item.label }}
+                            </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div>
+                        <button class="button is-primary m-4">
+                            Charger
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="box m-4" style="display: flex">
+    <div class="box m-4" style="width: 33%">
+        <div class="content has-text-centered ">
+            <table class="table is-narrow is-striped">
+                {% for item in rankings_html %}
+                <tbody>
+                <td value="{{ item.name }}">
+                    {{ item[0] }}
+                </td>
+                <td value="{{ item.elo }}">
+                    {{ item[1] }}
+                </td>
+                </tbody>
+                {% endfor %}
+            </table>
         </div>
-      </td>
-    </tbody>
-  </table>
+    </div>
+
+    <div class="box m-4" style="flex: 1">
+        <div class="content has-text-centered ">
+
+        </div>
+    </div>
 </div>
+
 {% endblock %}
