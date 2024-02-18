@@ -41,6 +41,7 @@ create table league (
 );
 
 create table player_deck_league (
+    id integer primary key autoincrement,
     player_1_id integer,
     player_2_id integer,
     deck_1_id integer,
@@ -48,7 +49,6 @@ create table player_deck_league (
     league_id integer,
     "date" date,
     winner_player_id integer,
-    primary key (player_1_id, player_2_id, deck_1_id, deck_2_id, league_id, date, winner_player_id),
     foreign key (player_1_id) references player(id),
     foreign key (player_2_id) references player(id),
     foreign key (deck_1_id) references deck(id),
