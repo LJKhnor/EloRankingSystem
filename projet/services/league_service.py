@@ -39,3 +39,13 @@ def get_league_ranking(league_id):
         'where pl.league_id = ? '
         'order by pl.elo desc', (league_id)
     ).fetchall()
+
+
+def get_players_ratio(league_id):
+    return db.get_db().execute(
+        'select p.name, COUNT(p.name) as win from player_deck_league pdl '
+        'inner join player p on p.id = pdl.winner_player_id '
+        'where pdl.league_id = ?'
+        'group by p.name '
+        'order by win desc', (league_id)
+    ).fetchall()

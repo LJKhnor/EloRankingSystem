@@ -41,9 +41,13 @@ def league():
         league_id = request.form['league']
         if league_id is not '':
             rankings = league_service.get_league_ranking(league_id)
+            ratio_win_lose = league_service.get_players_ratio(league_id)
             rankings_html = []
+            ratio_win_lose_html = []
             for ranking in rankings:
                 rankings_html.append((ranking['name'], round(ranking['elo'],2)))
+            for ratio in ratio_win_lose:
+                ratio_win_lose_html.append(((ratio['name'], ratio['win'])))
     return render_template('league.html', **locals())
 
 

@@ -57,7 +57,24 @@
 
     <div class="box m-4" style="flex: 1">
         <div class="content has-text-centered ">
-
+            <table class="table is-narrow is-striped">
+                {% for item in ratio_win_lose_html %}
+                <tbody>
+                <td value="{{ item.name }}">
+                    {{ item[0] }}
+                </td>
+                <td value="{{ item.win }}">
+                    {{ item[1] }} (win)
+                </td>
+                <td value="{{ item.lose }}">
+                    {{ item[1] }} (lose)
+                </td>
+                <td value="{{ item.ratio }}">
+                    {{ item[1] / item[1] }}
+                </td>
+                </tbody>
+                {% endfor %}
+            </table>
         </div>
     </div>
 </div>
