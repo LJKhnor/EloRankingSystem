@@ -11,7 +11,7 @@ def get_league_id_by_name():
 
 def get_all_leagues():
     leagues = db.get_db().execute(
-        'SELECT l.id,l.label FROM league l'
+        'SELECT l.id,l.label, l.start_date FROM league l'
     )
     return leagues.fetchall()
 
@@ -49,3 +49,8 @@ def get_players_ratio(league_id):
         'group by p.name '
         'order by win desc', (league_id)
     ).fetchall()
+
+def get_league_infos(league_id):
+    return db.get_db().execute(
+        'select * from league where id = ?', (league_id,)
+    ).fetchone()

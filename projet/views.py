@@ -40,6 +40,9 @@ def league():
     if request.method == 'POST':
         league_id = request.form['league']
         if league_id != '':
+            # infos part
+            league_infos = league_service.get_league_infos(league_id)
+            # ratio parts
             rankings = league_service.get_league_ranking(league_id)
             ratio_win_lose = league_service.get_players_ratio(league_id)
             rankings_html = []
