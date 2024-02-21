@@ -4,6 +4,7 @@ from .auth import login_required
 from .db import get_db
 from werkzeug.security import check_password_hash, generate_password_hash
 from .services import UserService, league_service, player_service, deck_service, match_service
+from .elo import elo
 
 app = Flask(__name__)
 bp_auth = auth.bp
@@ -29,16 +30,36 @@ def index():
     return render_template('index.html', **locals())
 
 
-@bp_business.route('/league')
+@bp_business.route('/league', methods=('GET', 'POST'))
 @login_required
 def league():
     """ league page route"""
-    return render_template('league.html')
+
+    leagues = league_service.get_all_leagues()
+
+    if request.method == 'POST':
+        league_id = request.form['league']
+        if league_id != '':
+            rankings = league_service.get_league_ranking(league_id)
+            ratio_win_lose = league_service.get_players_ratio(league_id)
+            rankings_html = []
+            ratio_win_lose_html = []
+            for ranking in rankings:
+                rankings_html.append((ranking['name'], round(ranking['elo'],2)))
+            for ratio in ratio_win_lose:
+                ratio_win_lose_html.append(((ratio['name'], ratio['win'])))
+    return render_template('league.html', **locals())
 
 
 @bp_business.route('/new_match', methods=('GET', 'POST'))
 def new_match():
     """ new match route """
+    i = elo.Implementation()
+
+    leagues = league_service.get_all_leagues()
+    players = player_service.get_all_players()
+    decks = deck_service.get_all_decks()
+
     if request.method == 'POST':
         error = None
 
@@ -65,14 +86,24 @@ def new_match():
             error = "Le vainqueur choisi n'est pas correct"
 
         if error is None:
+            #  rechercher l'elo des 2 joueur pour la league en cours
+            elo_player_1 = player_service.get_elo_by_ids(player_1_id, league_id)
+            elo_player_2 = player_service.get_elo_by_ids(player_2_id, league_id)
+            # insérer dans Implementation les joueur, leur rating et leurs decks
+            i.addPlayer(player_1_id,None if elo_player_1 is None else elo_player_1['elo'])
+            i.addPlayer(player_2_id,None if elo_player_2 is None else elo_player_2['elo'])
+            i.addDeck(deck_player_1_id)
+            i.addDeck(deck_player_2_id)
+
+            i.processEloForMatch(player_1_id,deck_player_1_id,player_2_id,deck_player_2_id,winner=winner_id)
+
+            player_service.save_players_elo(i.getPlayer(player_1_id).name, i.getPlayerRating(player_1_id),league_id)
+            player_service.save_players_elo(i.getPlayer(player_2_id).name, i.getPlayerRating(player_2_id),league_id)
+
             match_service.save_new_match(league_id, date, player_1_id, player_2_id, deck_player_1_id, deck_player_2_id, winner_id)
             return redirect(url_for('index'))
 
         flash(error)
-
-    leagues = league_service.get_all_leagues()
-    players = player_service.get_all_players()
-    decks = deck_service.get_all_decks()
 
     return render_template('new_match.html', **locals()) # locals() return all the variable set in the scope of the method
 

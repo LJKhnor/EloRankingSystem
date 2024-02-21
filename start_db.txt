@@ -1,43 +1,26 @@
 insert into player (name)
-values ("Joachim");
-insert into player (name)
-values ("Julien Lejeune");
-insert into player (name)
-values ("Olivier");
-insert into player (name)
-values ("Christopher");
-insert into player (name)
-values ("Julien Laurent");
-insert into player (name)
-values ("Gilles");
+values ("Joachim"),
+	("Julien Lejeune"),
+	("Olivier"),
+	("Christopher"),
+	("Julien Laurent"),
+	("Gilles");
 
 
 insert into league (label,"type",start_date, end_date)
 values ("League Test", "Commander", "06-02-2024", "15-02-2024");
 
 insert into deck (name, player_id)
-values ("Urza",1);
-insert into deck (name, player_id)
-values ("Zombies",2);
-insert into deck (name, player_id)
-values ("Chishiro",4);
-insert into deck (name, player_id)
-values ("Yuriko",4);
-insert into deck (name, player_id)
-values ("Manaforge",3);
-insert into deck (name, player_id)
-values ("Mordor",6);
-insert into deck (name, player_id)
-values ("Légendaire",4);
-insert into deck (name, player_id)
-values ("Eowyn",4);
-insert into deck (name, player_id)
-values ("Doctor Who",2);
-insert into deck (name, player_id)
-values ("Vampires",6);
-insert into deck (name, player_id)
-values ("Rainbow",4);
-insert into deck (name, player_id)
-values ("Humains",4);
-insert into deck (name, player_id)
-values ("Glissa",3);
+values ("Urza",1),
+	("Zombies",2),
+	("Chishiro",4),
+	("Yuriko",4),
+	("Manaforge",3),
+	("Mordor",6),
+	("Légendaire",4),
+	("Eowyn",4),
+	("Doctor Who",2),
+	("Vampires",6),
+	("Rainbow",4),
+	("Humains",4),
+	("Glissa",3);
