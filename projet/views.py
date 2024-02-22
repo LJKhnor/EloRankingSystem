@@ -5,6 +5,7 @@ from .db import get_db
 from werkzeug.security import check_password_hash, generate_password_hash
 from .services import UserService, league_service, player_service, deck_service, match_service
 from .elo import elo
+from .utils import utils
 
 app = Flask(__name__)
 bp_auth = auth.bp
@@ -48,7 +49,7 @@ def league():
             rankings_html = []
             ratio_win_lose_html = []
             for ranking in rankings:
-                rankings_html.append((ranking['name'], round(ranking['elo'],2)))
+                rankings_html.append((ranking['name'], round(ranking['elo'],2), utils.processColor(ranking,rankings)))
             for ratio in ratio_win_lose:
                 ratio_win_lose_html.append(((ratio['name'], ratio['win'])))
     return render_template('league.html', **locals())

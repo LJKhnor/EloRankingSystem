@@ -60,10 +60,10 @@
             <table class="table is-narrow is-striped">
                 {% for item in rankings_html %}
                 <tbody>
-                <td value="{{ item.name }}">
+                <td value="{{ item[0] }}">
                     {{ item[0] }}
                 </td>
-                <td class="td-elo" value="{{ item.elo }}">
+                <td class="td-elo" value="{{ item[1] }}" style="background-color: {{item[2]}}">
                     {{ item[1] }}
                 </td>
                 </tbody>
