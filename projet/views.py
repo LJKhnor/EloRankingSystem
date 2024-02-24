@@ -5,6 +5,7 @@ from .db import get_db
 from werkzeug.security import check_password_hash, generate_password_hash
 from .services import UserService, league_service, player_service, deck_service, match_service
 from .elo import elo
+from .utils import utils
 
 app = Flask(__name__)
 bp_auth = auth.bp
@@ -40,14 +41,33 @@ def league():
     if request.method == 'POST':
         league_id = request.form['league']
         if league_id != '':
+            # infos part
+            league_infos = league_service.get_league_infos(league_id)
+            # ratio parts
             rankings = league_service.get_league_ranking(league_id)
-            ratio_win_lose = league_service.get_players_ratio(league_id)
+            playersForLeague = league_service.get_players_from_league(league_id)
             rankings_html = []
             ratio_win_lose_html = []
+            nbCols = (playersForLeague.__len__()+1)
+            nbRows = (playersForLeague.__len__()+1)
+            nb_matches_html = []
+
             for ranking in rankings:
-                rankings_html.append((ranking['name'], round(ranking['elo'],2)))
-            for ratio in ratio_win_lose:
-                ratio_win_lose_html.append(((ratio['name'], ratio['win'])))
+                rankings_html.append((ranking['name'], round(ranking['elo'],2), utils.processColor(ranking,rankings)))
+
+            for player in playersForLeague:
+                nbPlay = league_service.get_number_play(player['id'], league_id)
+                nbWin = league_service.get_number_win(player['id'], league_id)
+                nbLose = nbPlay[0] - nbWin[0]
+                ratio_win_lose_html.append(((player['name'], nbPlay[0], nbWin[0], nbLose)))
+
+            for i in range(playersForLeague.__len__()):
+                nb_matches_player =[]
+                for j in range(playersForLeague.__len__()):
+                    nb_matches = league_service.get_count_matches(playersForLeague[i]['id'], playersForLeague[j]['id'])
+                    nb_matches_player.append(nb_matches[0])
+                nb_matches_html.append(nb_matches_player)
+
     return render_template('league.html', **locals())
 
 

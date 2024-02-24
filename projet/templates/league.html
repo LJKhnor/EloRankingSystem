@@ -4,49 +4,72 @@
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/league.css') }}"/>
 {%  endblock %}
 
+{% block script %}
+<script type="text/javascript" src="{{url_for('static', filename='js/league.js')}}"></script>
+{% endblock %}
+
 {% block content %}
 <div class="container">
     <div class="content has-text-centered m-4">
         <p>League page</p>
     </div>
 </div>
-<div class="box m-4">
-    <div class="content has-text-centered ">
-        <!--    <button class="button is-text">Nouvelle league</button>-->
-        <form method="POST" action="/league">
-            <div class="field">
-                <div class="control">
-                    <div class="select">
-                        <select name="league" id="dropdown-league-choice-button">
-                            <option value="">Choix de la league</option>
-                            {% for item in leagues %}
-                            <option value="{{ item.id }}">
-                                {{ item.label }}
-                            </option>
-                            {% endfor %}
-                        </select>
-                    </div>
-                    <div>
-                        <button class="button is-primary m-4">
-                            Charger
-                        </button>
+<div class="box m-4" style="display: flex">
+    <div class="box m-4" style="height: 25%;width: 33%">
+        <div class="content has-text-centered ">
+            <form method="POST" action="/league">
+                <div class="field">
+                    <div class="control">
+                        <div class="select">
+                            <select name="league" id="dropdown-league-choice-button">
+                                <option value="">Choix de la league</option>
+                                {% for item in leagues %}
+                                <option value="{{ item.id }}">
+                                    {{ item.label }}
+                                </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div>
+                            <button class="button is-success m-4">
+                                Charger
+                            </button>
+                        </div>
                     </div>
                 </div>
+            </form>
+        </div>
+    </div>
+    <div class="box m-4" style="flex: 1">
+        <div class="content has-text-centered ">
+            <div class="content has-text-centered" id="panel_info_League">
+                <table class="table is-narrow is-striped">
+                    <caption class="caption">Informations de league</caption>
+                    <tbody>
+                    {% if league_infos != undefined %}
+                    <td>{{ league_infos["label"] }}</td>
+                    <td>{{ league_infos["type"] }}</td>
+                    <td>Date de début : {{ league_infos["start_date"] }}</td>
+                    <td>Date de fin : {{ league_infos["end_date"] }}</td>
+                    </tbody>
+                    {% endif %}
+                </table>
             </div>
-        </form>
+        </div>
     </div>
 </div>
 
 <div class="box m-4" style="display: flex">
-    <div class="box m-4" style="width: 33%">
+    <div class="box m-4" style="height: 25%;width: 33%">
         <div class="content has-text-centered ">
             <table class="table is-narrow is-striped">
+                <caption class="caption">Classement ELO</caption>
                 {% for item in rankings_html %}
                 <tbody>
-                <td value="{{ item.name }}">
+                <td value="{{ item[0] }}">
                     {{ item[0] }}
                 </td>
-                <td value="{{ item.elo }}">
+                <td class="td-elo" value="{{ item[1] }}" style="background-color: {{item[2]}}">
                     {{ item[1] }}
                 </td>
                 </tbody>
@@ -58,24 +81,53 @@
     <div class="box m-4" style="flex: 1">
         <div class="content has-text-centered ">
             <table class="table is-narrow is-striped">
-                {% for item in ratio_win_lose_html %}
-                <tbody>
-                <td value="{{ item.name }}">
-                    {{ item[0] }}
-                </td>
-                <td value="{{ item.win }}">
-                    {{ item[1] }} (win)
-                </td>
-<!--                <td value="{{ item.lose }}">-->
-<!--                    {{ item[1] }} (lose)-->
-<!--                </td>-->
-<!--                <td value="{{ item.ratio }}">-->
-<!--                    {{ item[1] / item[1] }}-->
-<!--                </td>-->
-                </tbody>
+                <caption class="caption">Nombre de matchs joués</caption>
+                <tr>
+                    <th></th>
+                    {% for item in playersForLeague %}
+                    <th>{{ item[1] }}</th>
+                    {% endfor %}
+                </tr>
+                {% for j in range(playersForLeague.__len__()) %}
+                <tr>
+                    <td id="nested-{{j}}">
+                        <table id="table-{{j}}">
+                            <tr>
+                                <th>{{ playersForLeague[j][1] }}</th>
+                            </tr>
+                        </table>
+                    </td>
+                    {% for i in range(nb_matches_html.__len__()) %}
+                    <td>{{nb_matches_html[j][i]}}</td>
+                    {% endfor %}
+                </tr>
                 {% endfor %}
             </table>
         </div>
+    </div>
+</div>
+
+<div class="box m-4" style="display: flex">
+    <div class="box m-4" style="flex: 1">
+        <table class="table is-narrow is-striped">
+            <caption class="caption">Nombre de parties jouées, gagnées et perdues</caption>
+            {% for item in ratio_win_lose_html %}
+            <tbody>
+            <td value="{{ item.name }}">
+                {{ item[0] }}
+            </td>
+            <td value="{{ item.play }}">
+                {{ item[1] }} (jouée(s))
+            </td>
+            <td value="{{ item.win }}">
+                {{ item[2] }} (gagnée(s))
+            </td>
+            <td value="{{ item.lose }}">
+                {{ item[3] }} (perdue(s))
+            </td>
+            </tbody>
+            {% endfor %}
+        </table>
     </div>
 </div>
 
