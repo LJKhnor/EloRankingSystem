@@ -41,14 +41,41 @@ def get_league_ranking(league_id):
     ).fetchall()
 
 
-def get_players_ratio(league_id):
+def get_players_from_league(league_id):
     return db.get_db().execute(
-        'select p.name, COUNT(p.name) as win from player_deck_league pdl '
-        'inner join player p on p.id = pdl.winner_player_id '
+        'select p.id, p.name from player_deck_league pdl '
+        'inner join player p on p.id = pdl.player_1_id or p.id = pdl.player_2_id '
         'where pdl.league_id = ?'
         'group by p.name '
-        'order by win desc', (league_id)
+        'order by p.id ', (league_id)
     ).fetchall()
+
+
+def get_number_play(player_id, league_id):
+    return db.get_db().execute(
+        'select count(pdl.id) '
+        'from player_deck_league pdl '
+        'where (pdl.player_1_id = ? or pdl.player_2_id = ?) and pdl.league_id = ? ', (player_id, player_id, league_id)
+    ).fetchone()
+
+
+def get_number_win(player_id, league_id):
+    return db.get_db().execute(
+        'select count(pdl.id) '
+        'from player_deck_league pdl '
+        'where pdl.winner_player_id  = ? and pdl.league_id = ?', (player_id, league_id)
+    ).fetchone()
+
+
+def get_count_matches(player1_id, player2_id):
+    return db.get_db().execute(
+        'select count(*) '
+        'from player_deck_league pdl '
+        'where (pdl.player_1_id = ? and pdl.player_2_id = ?) '
+        'or (pdl.player_1_id = ? and pdl.player_2_id = ?)',
+        (player1_id, player2_id, player2_id, player1_id)
+    ).fetchone()
+
 
 def get_league_infos(league_id):
     return db.get_db().execute(

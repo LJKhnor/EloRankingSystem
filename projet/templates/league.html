@@ -42,22 +42,28 @@
     </div>
     <div class="box m-4" style="flex: 1">
         <div class="content has-text-centered ">
-            <div class="content has-text-centered" id="panel_info">
-                {% if league_infos != undefined %}
-                    <h2>{{ league_infos["label"] }}</h2>
-                    <p>{{ league_infos["type"] }}</p>
-                    <p>Date de début : {{ league_infos["start_date"] }}</p>
-                    <p>Date de fin : {{ league_infos["end_date"] }}</p>
-                {% endif %}
+            <div class="content has-text-centered" id="panel_info_League">
+                <table class="table is-narrow is-striped">
+                    <caption class="caption">Informations de league</caption>
+                    <tbody>
+                    {% if league_infos != undefined %}
+                    <td>{{ league_infos["label"] }}</td>
+                    <td>{{ league_infos["type"] }}</td>
+                    <td>Date de début : {{ league_infos["start_date"] }}</td>
+                    <td>Date de fin : {{ league_infos["end_date"] }}</td>
+                    </tbody>
+                    {% endif %}
+                </table>
             </div>
         </div>
     </div>
 </div>
 
 <div class="box m-4" style="display: flex">
-    <div class="box m-4" style="width: 33%">
+    <div class="box m-4" style="height: 25%;width: 33%">
         <div class="content has-text-centered ">
             <table class="table is-narrow is-striped">
+                <caption class="caption">Classement ELO</caption>
                 {% for item in rankings_html %}
                 <tbody>
                 <td value="{{ item[0] }}">
@@ -75,24 +81,53 @@
     <div class="box m-4" style="flex: 1">
         <div class="content has-text-centered ">
             <table class="table is-narrow is-striped">
-                {% for item in ratio_win_lose_html %}
-                <tbody>
-                <td value="{{ item.name }}">
-                    {{ item[0] }}
-                </td>
-                <td value="{{ item.win }}">
-                    {{ item[1] }} (win)
-                </td>
-                <!--                <td value="{{ item.lose }}">-->
-                <!--                    {{ item[1] }} (lose)-->
-                <!--                </td>-->
-                <!--                <td value="{{ item.ratio }}">-->
-                <!--                    {{ item[1] / item[1] }}-->
-                <!--                </td>-->
-                </tbody>
+                <caption class="caption">Nombre de matchs joués</caption>
+                <tr>
+                    <th></th>
+                    {% for item in playersForLeague %}
+                    <th>{{ item[1] }}</th>
+                    {% endfor %}
+                </tr>
+                {% for j in range(playersForLeague.__len__()) %}
+                <tr>
+                    <td id="nested-{{j}}">
+                        <table id="table-{{j}}">
+                            <tr>
+                                <th>{{ playersForLeague[j][1] }}</th>
+                            </tr>
+                        </table>
+                    </td>
+                    {% for i in range(nb_matches_html.__len__()) %}
+                    <td>{{nb_matches_html[j][i]}}</td>
+                    {% endfor %}
+                </tr>
                 {% endfor %}
             </table>
         </div>
+    </div>
+</div>
+
+<div class="box m-4" style="display: flex">
+    <div class="box m-4" style="flex: 1">
+        <table class="table is-narrow is-striped">
+            <caption class="caption">Nombre de parties jouées, gagnées et perdues</caption>
+            {% for item in ratio_win_lose_html %}
+            <tbody>
+            <td value="{{ item.name }}">
+                {{ item[0] }}
+            </td>
+            <td value="{{ item.play }}">
+                {{ item[1] }} (jouée(s))
+            </td>
+            <td value="{{ item.win }}">
+                {{ item[2] }} (gagnée(s))
+            </td>
+            <td value="{{ item.lose }}">
+                {{ item[3] }} (perdue(s))
+            </td>
+            </tbody>
+            {% endfor %}
+        </table>
     </div>
 </div>
 

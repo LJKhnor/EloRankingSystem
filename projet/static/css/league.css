@@ -1,3 +1,10 @@
 .td-elo {
     border-radius:12px;
 }
+
+.caption {
+    color: black;
+    font-size: large;
+    font-weight: 600;
+    margin-bottom: 12px;
+}
