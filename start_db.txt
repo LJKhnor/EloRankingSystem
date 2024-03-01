@@ -23,4 +23,11 @@ values ("Urza",1),
 	("Vampires",6),
 	("Rainbow",4),
 	("Humains",4),
-	("Glissa",3);
+	("Glissa",3)
+	("Plus 1 en pagaille",4),
+	("Gruul Stompy",2),
+	("Rakdos Vampires",1),
+	("Aggro rouge oli",3),
+	("Toxic",4),
+	("Forgerunes",1)
+;

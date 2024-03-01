@@ -67,13 +67,13 @@ def get_number_win(player_id, league_id):
     ).fetchone()
 
 
-def get_count_matches(player1_id, player2_id):
+def get_count_matches(player1_id, player2_id,league_id):
     return db.get_db().execute(
         'select count(*) '
         'from player_deck_league pdl '
-        'where (pdl.player_1_id = ? and pdl.player_2_id = ?) '
-        'or (pdl.player_1_id = ? and pdl.player_2_id = ?)',
-        (player1_id, player2_id, player2_id, player1_id)
+        'where ((pdl.player_1_id = ? and pdl.player_2_id = ?) '
+        'or (pdl.player_1_id = ? and pdl.player_2_id = ?)) and pdl.league_id= ?',
+        (player1_id, player2_id, player2_id, player1_id, league_id)
     ).fetchone()
 
 

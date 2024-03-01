@@ -64,7 +64,7 @@ def league():
             for i in range(playersForLeague.__len__()):
                 nb_matches_player =[]
                 for j in range(playersForLeague.__len__()):
-                    nb_matches = league_service.get_count_matches(playersForLeague[i]['id'], playersForLeague[j]['id'])
+                    nb_matches = league_service.get_count_matches(playersForLeague[i]['id'], playersForLeague[j]['id'],league_id)
                     nb_matches_player.append(nb_matches[0])
                 nb_matches_html.append(nb_matches_player)
 
