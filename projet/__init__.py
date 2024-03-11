@@ -49,5 +49,6 @@ def create_app(test_config=None):
     app.add_url_rule("/auth/signup", endpoint="signup")
     app.add_url_rule("/new_match", view_func=new_match)
     app.add_url_rule("/new_league", endpoint="new_league")
+    app.add_url_rule("/rejeu", view_func=rejeu)
 
     return app

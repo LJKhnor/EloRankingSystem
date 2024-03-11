@@ -20,13 +20,14 @@ def index():
         matches = match_service.get_last_five_matches()
         matches_fetched = []
         for match in matches:
+            league_id = match['league_id']
             league_name = league_service.get_league_name_by_id(match['league_id'])['label']
             player_1_name = player_service.get_player_by_id(match['player_1_id'])['name']
             player_2_name = player_service.get_player_by_id(match['player_2_id'])['name']
             deck_1_name = deck_service.get_deck_by_id(match['deck_1_id'])['name']
             deck_2_name = deck_service.get_deck_by_id(match['deck_2_id'])['name']
             winner_name = player_service.get_player_by_id(match['winner_player_id'])['name']
-            matches_fetched.append((league_name, player_1_name, deck_1_name, player_2_name, deck_2_name, winner_name))
+            matches_fetched.append(((league_id,league_name), player_1_name, deck_1_name, player_2_name, deck_2_name, winner_name))
 
     return render_template('index.html', **locals())
 
@@ -64,14 +65,14 @@ def league():
             for i in range(playersForLeague.__len__()):
                 nb_matches_player =[]
                 for j in range(playersForLeague.__len__()):
-                    nb_matches = league_service.get_count_matches(playersForLeague[i]['id'], playersForLeague[j]['id'],league_id)
+                    nb_matches = league_service.get_count_matches(playersForLeague[i]['id'], playersForLeague[j]['id'])
                     nb_matches_player.append(nb_matches[0])
                 nb_matches_html.append(nb_matches_player)
 
     return render_template('league.html', **locals())
 
 
-@bp_business.route('/new_match', methods=('GET', 'POST'))
+@bp_business.route('/new_match<item>', methods=('GET', 'POST'))
 def new_match():
     """ new match route """
     i = elo.Implementation()
@@ -79,6 +80,10 @@ def new_match():
     leagues = league_service.get_all_leagues()
     players = player_service.get_all_players()
     decks = deck_service.get_all_decks()
+
+    if request.method == 'GET':
+        if request.values != None:
+            pass
 
     if request.method == 'POST':
         error = None
@@ -157,6 +162,14 @@ def new_league():
 
     return render_template('new_league.html')
 
+@app.route('/rejeu', methods=('GET', 'POST'))
+def rejeu():
+    """Outils de rejeu pour corriger l'ajout malencontreux via l'appli qui impacterait négativement le calcul de l'elo"""
+
+    if request.method == 'POST':
+        pass
+
+    return render_template('rejeu.html')
 
 # Auth route
 @bp_auth.route('/login', methods=('GET', 'POST'))

@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/league.css') }}"/>
+{%  endblock %}
+
+{% block script %}
+<script type="text/javascript" src="{{url_for('static', filename='js/index.js')}}"></script>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="content has-text-centered m-4">
+        <p>Outil de rejeu</p>
+    </div>
+</div>
+<div class="container">
+    <div class="content has-text-centered m-4">
+        <a class="button is-success " href="{{url_for('new_match')}}">
+            Commencer
+        </a>
+        <form method="GET" action="/">
+            <table class="table">
+                <thead>
+                <tr>
+                </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </form>
+    </div>
+</div>
+{% endblock %}
