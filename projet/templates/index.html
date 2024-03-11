@@ -11,7 +11,8 @@
 {% block content %}
 <div class="container">
   <div class="content has-text-centered m-4">
-    <p>Welcome to the home page</p>
+    <h3>Bienvenue sur la page d'acceuil</h3>
+    <p>La liste ci-dessous reprends les 5 derniers matchs joués</p>
   </div>
 </div>
 <div class="container">
@@ -32,28 +33,32 @@
           <th>Joueur 2</th>
           <th>Nom du deck Joueur 2</th>
           <th>Vainqueur</th>
+          <th>Action rapide</th>
         </tr>
       </thead>
         {% for item in matches_fetched %}
         <tbody>
-          <td value="{{ item.league_name }}">
-              {{ item[0] }}
+          <td value="{{ item[0][0] }}">
+              {{ item[0][1] }}
           </td>
-          <td value="{{ item.id }}">
-              {{ item[1] }}
+          <td value="{{ item[1][0] }}">
+              {{ item[1][1] }}
           </td>
-          <td value="{{ item.id }}">
-              {{ item[2] }}
+          <td value="{{ item[2][0] }}">
+              {{ item[2][1] }}
           </td>
-          <td value="{{ item.id }}">
-              {{ item[3] }}
+          <td value="{{ item[3][0] }}">
+              {{ item[3][1] }}
           </td>
-          <td value="{{ item.id }}">
-              {{ item[4] }}
+          <td value="{{ item[4][0] }}">
+              {{ item[4][1] }}
           </td>
-          <td value="{{ item.id }}">
-              {{ item[5] }}
+          <td value="{{ item[5][0] }}">
+              {{ item[5][1] }}
           </td>
+        <td>
+          <a class="button is-success" href="{{url_for('new_match') }}">Réencoder</a>
+        </td>
         </tbody>
         {% endfor %}
       </table>
