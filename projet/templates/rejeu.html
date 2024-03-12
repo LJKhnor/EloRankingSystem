@@ -11,24 +11,29 @@
 {% block content %}
 <div class="container">
     <div class="content has-text-centered m-4">
-        <p>Outil de rejeu</p>
-    </div>
-</div>
-<div class="container">
-    <div class="content has-text-centered m-4">
-        <a class="button is-success " href="{{url_for('new_match')}}">
-            Commencer
-        </a>
-        <form method="GET" action="/">
-            <table class="table">
-                <thead>
-                <tr>
-                </tr>
-                </thead>
-                <tbody>
-                </tbody>
-            </table>
-        </form>
+        <h3 class="title">Outil de rejeu</h3>
+        <div class="box">
+            <form method="POST" action="/rejeu">
+
+                <div class="field">
+                    <div class="control">
+                        <div class="select">
+                            <select name="league" id="dropdown-league-choice-button">
+                                <option value="">Choix de la league</option>
+                                {% for item in leagues %}
+                                <option value="{{ item.id }}">
+                                    {{ item.label }}
+                                </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <button class="button is-info">
+                    Commencer le rejeu
+                </button>
+            </form>
+        </div>
     </div>
 </div>
 {% endblock %}

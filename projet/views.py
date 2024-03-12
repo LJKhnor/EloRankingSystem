@@ -27,7 +27,8 @@ def index():
             deck_1_name = deck_service.get_deck_by_id(match['deck_1_id'])['name']
             deck_2_name = deck_service.get_deck_by_id(match['deck_2_id'])['name']
             winner_name = player_service.get_player_by_id(match['winner_player_id'])['name']
-            matches_fetched.append(((league_id,league_name), player_1_name, deck_1_name, player_2_name, deck_2_name, winner_name))
+            matches_fetched.append(
+                ((league_id, league_name), player_1_name, deck_1_name, player_2_name, deck_2_name, winner_name))
 
     return render_template('index.html', **locals())
 
@@ -49,12 +50,12 @@ def league():
             playersForLeague = league_service.get_players_from_league(league_id)
             rankings_html = []
             ratio_win_lose_html = []
-            nbCols = (playersForLeague.__len__()+1)
-            nbRows = (playersForLeague.__len__()+1)
+            nbCols = (playersForLeague.__len__() + 1)
+            nbRows = (playersForLeague.__len__() + 1)
             nb_matches_html = []
 
             for ranking in rankings:
-                rankings_html.append((ranking['name'], round(ranking['elo'],2), utils.processColor(ranking,rankings)))
+                rankings_html.append((ranking['name'], round(ranking['elo'], 2), utils.processColor(ranking, rankings)))
 
             for player in playersForLeague:
                 nbPlay = league_service.get_number_play(player['id'], league_id)
@@ -63,16 +64,17 @@ def league():
                 ratio_win_lose_html.append(((player['name'], nbPlay[0], nbWin[0], nbLose)))
 
             for i in range(playersForLeague.__len__()):
-                nb_matches_player =[]
+                nb_matches_player = []
                 for j in range(playersForLeague.__len__()):
-                    nb_matches = league_service.get_count_matches(playersForLeague[i]['id'], playersForLeague[j]['id'])
+                    nb_matches = league_service.get_count_matches(playersForLeague[i]['id'], playersForLeague[j]['id'],
+                                                                  league_id)
                     nb_matches_player.append(nb_matches[0])
                 nb_matches_html.append(nb_matches_player)
 
     return render_template('league.html', **locals())
 
 
-@bp_business.route('/new_match<item>', methods=('GET', 'POST'))
+@bp_business.route('/new_match', methods=('GET', 'POST'))
 def new_match():
     """ new match route """
     i = elo.Implementation()
@@ -115,22 +117,24 @@ def new_match():
             elo_player_1 = player_service.get_elo_by_ids(player_1_id, league_id)
             elo_player_2 = player_service.get_elo_by_ids(player_2_id, league_id)
             # insérer dans Implementation les joueur, leur rating et leurs decks
-            i.addPlayer(player_1_id,None if elo_player_1 is None else elo_player_1['elo'])
-            i.addPlayer(player_2_id,None if elo_player_2 is None else elo_player_2['elo'])
+            i.addPlayer(player_1_id, None if elo_player_1 is None else elo_player_1['elo'])
+            i.addPlayer(player_2_id, None if elo_player_2 is None else elo_player_2['elo'])
             i.addDeck(deck_player_1_id)
             i.addDeck(deck_player_2_id)
 
-            i.processEloForMatch(player_1_id,deck_player_1_id,player_2_id,deck_player_2_id,winner=winner_id)
+            i.processEloForMatch(player_1_id, deck_player_1_id, player_2_id, deck_player_2_id, winner=winner_id)
 
-            player_service.save_players_elo(i.getPlayer(player_1_id).name, i.getPlayerRating(player_1_id),league_id)
-            player_service.save_players_elo(i.getPlayer(player_2_id).name, i.getPlayerRating(player_2_id),league_id)
+            player_service.save_players_elo(i.getPlayer(player_1_id).name, i.getPlayerRating(player_1_id), league_id)
+            player_service.save_players_elo(i.getPlayer(player_2_id).name, i.getPlayerRating(player_2_id), league_id)
 
-            match_service.save_new_match(league_id, date, player_1_id, player_2_id, deck_player_1_id, deck_player_2_id, winner_id)
+            match_service.save_new_match(league_id, date, player_1_id, player_2_id, deck_player_1_id, deck_player_2_id,
+                                         winner_id)
             return redirect(url_for('index'))
 
         flash(error)
 
-    return render_template('new_match.html', **locals()) # locals() return all the variable set in the scope of the method
+    return render_template('new_match.html',
+                           **locals())  # locals() return all the variable set in the scope of the method
 
 
 @bp_business.route('/new_league', methods=('GET', 'POST'))
@@ -162,14 +166,59 @@ def new_league():
 
     return render_template('new_league.html')
 
-@app.route('/rejeu', methods=('GET', 'POST'))
+
+@bp_business.route('/rejeu', methods=('GET', 'POST'))
+@login_required
 def rejeu():
     """Outils de rejeu pour corriger l'ajout malencontreux via l'appli qui impacterait négativement le calcul de l'elo"""
+    leagues = league_service.get_all_leagues()
+    error = None
+    i = elo.Implementation()
 
-    if request.method == 'POST':
+    if request.method == 'GET':
         pass
 
-    return render_template('rejeu.html')
+    if request.method == 'POST':
+        # gérer les erreurs
+        league_id = request.form['league']
+        if league_id is None:
+            error = "Aucune league valide choisie"
+        if error is None:
+            # recupérer l'ensemble des matchs de la league choisie
+            matches = league_service.getAllMatchesFromOneLeague(league_id)
+
+            # vider les elo des joueurs pour la league choisie
+            league_service.deleteAllEloForPlayersForOneLeague(league_id)
+
+            # reppasser chaque match dans l implementation
+            for match in matches:
+                league_id = match['league_id']
+                player_1_id = match['player_1_id']
+                player_2_id = match['player_2_id']
+                deck_player_1_id = match['deck_1_id']
+                deck_player_2_id = match['deck_2_id']
+                winner_id = match['winner_player_id']
+
+                #  rechercher l'elo des 2 joueur pour la league en cours
+                elo_player_1 = player_service.get_elo_by_ids(player_1_id, league_id)
+                elo_player_2 = player_service.get_elo_by_ids(player_2_id, league_id)
+                # insérer dans Implementation les joueur, leur rating et leurs decks
+                i.addPlayer(player_1_id, None if elo_player_1 is None else elo_player_1['elo'])
+                i.addPlayer(player_2_id, None if elo_player_2 is None else elo_player_2['elo'])
+                i.addDeck(deck_player_1_id)
+                i.addDeck(deck_player_2_id)
+
+                i.processEloForMatch(player_1_id, deck_player_1_id, player_2_id, deck_player_2_id, winner=winner_id)
+
+                player_service.save_players_elo(i.getPlayer(player_1_id).name, i.getPlayerRating(player_1_id),
+                                                league_id)
+                player_service.save_players_elo(i.getPlayer(player_2_id).name, i.getPlayerRating(player_2_id),
+                                                league_id)
+
+        return redirect(url_for('index'))
+
+    return render_template('rejeu.html', **locals())
+
 
 # Auth route
 @bp_auth.route('/login', methods=('GET', 'POST'))
@@ -225,6 +274,7 @@ def signup():
         flash(error, category='message')
 
     return render_template('auth/signup.html')
+
 
 @app.errorhandler(404)
 def page_not_found(error):
