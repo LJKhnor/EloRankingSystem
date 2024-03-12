@@ -5,59 +5,63 @@
 {%  endblock %}
 
 {% block script %}
-  <script type="text/javascript" src="{{url_for('static', filename='js/index.js')}}"></script>
+<script type="text/javascript" src="{{url_for('static', filename='js/index.js')}}"></script>
 {% endblock %}
 
 {% block content %}
 <div class="container">
-  <div class="content has-text-centered m-4">
-    <p>Welcome to the home page</p>
-  </div>
+    <div class="content has-text-centered m-4">
+        <p>Welcome to the home page</p>
+    </div>
 </div>
 <div class="container">
-  <div class="content has-text-centered m-4">
-    <a class="button is-success " href="{{url_for('new_match')}}">
-      Nouveau match
-    </a>
-    <a class="button is-success" href="{{url_for('new_league')}}">
-      Nouvelle League
-    </a>
-    <form method="GET" action="/">
-      <table class="table">
-      <thead>
-        <tr>
-          <th>League</th>
-          <th>Joueur 1</th>
-          <th>Nom du deck Joueur 1</th>
-          <th>Joueur 2</th>
-          <th>Nom du deck Joueur 2</th>
-          <th>Vainqueur</th>
-        </tr>
-      </thead>
-        {% for item in matches_fetched %}
-        <tbody>
-          <td value="{{ item.league_name }}">
-              {{ item[0] }}
-          </td>
-          <td value="{{ item.id }}">
-              {{ item[1] }}
-          </td>
-          <td value="{{ item.id }}">
-              {{ item[2] }}
-          </td>
-          <td value="{{ item.id }}">
-              {{ item[3] }}
-          </td>
-          <td value="{{ item.id }}">
-              {{ item[4] }}
-          </td>
-          <td value="{{ item.id }}">
-              {{ item[5] }}
-          </td>
-        </tbody>
-        {% endfor %}
-      </table>
-    </form>
-  </div>
+    <div class="content has-text-centered m-4">
+        <a class="button is-success " href="{{url_for('new_match')}}">
+            Nouveau match
+        </a>
+        <a class="button is-success" href="{{url_for('new_league')}}">
+            Nouvelle League
+        </a>
+        <form method="GET" action="/">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>League</th>
+                    <th>Joueur 1</th>
+                    <th>Nom du deck Joueur 1</th>
+                    <th>Joueur 2</th>
+                    <th>Nom du deck Joueur 2</th>
+                    <th>Vainqueur</th>
+                    <th>Date</th>
+                </tr>
+                </thead>
+                {% for item in matches_fetched %}
+                <tbody>
+                <td value="{{ item.league_name }}">
+                    {{ item[0][1] }}
+                </td>
+                <td value="{{ item.id }}">
+                    {{ item[1] }}
+                </td>
+                <td value="{{ item.id }}">
+                    {{ item[2] }}
+                </td>
+                <td value="{{ item.id }}">
+                    {{ item[3] }}
+                </td>
+                <td value="{{ item.id }}">
+                    {{ item[4] }}
+                </td>
+                <td value="{{ item.id }}">
+                    {{ item[5] }}
+                </td>
+                <td value="{{ item.id }}">
+                    {{ item[6] }}
+                </td>
+                </tbody>
+                {% endfor %}
+            </table>
+        </form>
+    </div>
 </div>
 {% endblock %}

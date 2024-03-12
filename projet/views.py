@@ -27,8 +27,9 @@ def index():
             deck_1_name = deck_service.get_deck_by_id(match['deck_1_id'])['name']
             deck_2_name = deck_service.get_deck_by_id(match['deck_2_id'])['name']
             winner_name = player_service.get_player_by_id(match['winner_player_id'])['name']
+            date = match['date']
             matches_fetched.append(
-                ((league_id, league_name), player_1_name, deck_1_name, player_2_name, deck_2_name, winner_name))
+                ((league_id, league_name), player_1_name, deck_1_name, player_2_name, deck_2_name, winner_name, date))
 
     return render_template('index.html', **locals())
 
