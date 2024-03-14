@@ -162,8 +162,13 @@ class Implementation:
             deckExpected1 = deck1.compareRating(deck2)
             deckExpected2 = deck2.compareRating(deck1)
 
-            k = len(self.__getPlayerList()) * 42
-            deck_k = len(self.__getDeckList()) * 42
+            # k = 25
+            k = len(self.__getPlayerList()) * 2
+            # deck_k = 25
+            deck_k = len(self.__getDeckList()) * 2
+
+            print("player1.rating ", player1.rating, "player2.rating", player2.rating)
+            print("k ", k)
 
             rating1 = player1.rating
             rating2 = player2.rating
@@ -197,7 +202,7 @@ class Implementation:
                 newRating1 = 0
                 newRating2 = rating2 - rating1
 
-            elif newRating2 < 0:
+            if newRating2 < 0:
                 newRating2 = 0
                 newRating1 = rating1 - rating2
 
@@ -205,7 +210,7 @@ class Implementation:
                 newDeckRating1 = 0
                 newDeckRating2 = deckRating2 - deckRating1
 
-            elif newDeckRating2 < 0:
+            if newDeckRating2 < 0:
                 newDeckRating2 = 0
                 newDeckRating1 = newDeckRating1 - newDeckRating2
 

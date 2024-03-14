@@ -110,7 +110,7 @@ def new_match():
             error = "Le deck choisi pour le joueur 1 n'est pas correct"
         if deck_player_2_id is None:
             error = "Le deck choisi pour le joueur 2 n'est pas correct"
-        if winner_id is None and (winner_id is not player_1_id or winner is not player_2_id):
+        if winner_id is None and (winner_id is not player_1_id or winner_id is not player_2_id):
             error = "Le vainqueur choisi n'est pas correct"
 
         if error is None:
@@ -215,6 +215,12 @@ def rejeu():
                                                 league_id)
                 player_service.save_players_elo(i.getPlayer(player_2_id).name, i.getPlayerRating(player_2_id),
                                                 league_id)
+
+                # print("-------------------")
+                # print(winner_id, " a gagné")
+                # print(i.getPlayer(player_1_id).name, " a ", i.getPlayerRating(player_1_id))
+                # print(i.getPlayer(player_2_id).name, " a ", i.getPlayerRating(player_2_id))
+                # print("-------------------")
 
         return redirect(url_for('index'))
 
