@@ -162,13 +162,11 @@ class Implementation:
             deckExpected1 = deck1.compareRating(deck2)
             deckExpected2 = deck2.compareRating(deck1)
 
-            # k = 25
+
+
             k = len(self.__getPlayerList()) * 2
             # deck_k = 25
             deck_k = len(self.__getDeckList()) * 2
-
-            print("player1.rating ", player1.rating, "player2.rating", player2.rating)
-            print("k ", k)
 
             rating1 = player1.rating
             rating2 = player2.rating

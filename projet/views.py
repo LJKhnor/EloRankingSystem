@@ -7,15 +7,20 @@ from .services import UserService, league_service, player_service, deck_service,
 from .elo import elo
 from .utils import utils
 
+import logging
+
+logging.basicConfig(level=logging.INFO, format='%(asctime)s : [%(levelname)s] %(name)s %(threadName)s : %(message)s')
+
 app = Flask(__name__)
 bp_auth = auth.bp
 bp_business = business.bp
 
+LOG = app.logger
 
 @bp_business.route('/')
 @login_required
 def index():
-    """ Root route"""
+    LOG.info(""" Home route""")
     if request.method == 'GET':
         matches = match_service.get_last_five_matches()
         matches_fetched = []
@@ -37,7 +42,7 @@ def index():
 @bp_business.route('/league', methods=('GET', 'POST'))
 @login_required
 def league():
-    """ league page route"""
+    LOG.info(""" league page route""")
 
     leagues = league_service.get_all_leagues()
 
@@ -77,7 +82,7 @@ def league():
 
 @bp_business.route('/new_match', methods=('GET', 'POST'))
 def new_match():
-    """ new match route """
+    LOG.info(""" new match route """)
     i = elo.Implementation()
 
     leagues = league_service.get_all_leagues()
@@ -114,16 +119,8 @@ def new_match():
             error = "Le vainqueur choisi n'est pas correct"
 
         if error is None:
-            #  rechercher l'elo des 2 joueur pour la league en cours
-            elo_player_1 = player_service.get_elo_by_ids(player_1_id, league_id)
-            elo_player_2 = player_service.get_elo_by_ids(player_2_id, league_id)
-            # insérer dans Implementation les joueur, leur rating et leurs decks
-            i.addPlayer(player_1_id, None if elo_player_1 is None else elo_player_1['elo'])
-            i.addPlayer(player_2_id, None if elo_player_2 is None else elo_player_2['elo'])
-            i.addDeck(deck_player_1_id)
-            i.addDeck(deck_player_2_id)
-
-            i.processEloForMatch(player_1_id, deck_player_1_id, player_2_id, deck_player_2_id, winner=winner_id)
+            add_new_match_with_elo(deck_player_1_id, deck_player_2_id, i, league_id, player_1_id, player_2_id,
+                                   winner_id)
 
             player_service.save_players_elo(i.getPlayer(player_1_id).name, i.getPlayerRating(player_1_id), league_id)
             player_service.save_players_elo(i.getPlayer(player_2_id).name, i.getPlayerRating(player_2_id), league_id)
@@ -132,7 +129,7 @@ def new_match():
                                          winner_id)
             return redirect(url_for('index'))
 
-        flash(error)
+        LOG.error(error)
 
     return render_template('new_match.html',
                            **locals())  # locals() return all the variable set in the scope of the method
@@ -141,7 +138,7 @@ def new_match():
 @bp_business.route('/new_league', methods=('GET', 'POST'))
 @login_required
 def new_league():
-    """ new league route """
+    LOG.info(""" new league route """)
 
     if request.method == 'POST':
         error = None
@@ -163,7 +160,7 @@ def new_league():
             league_service.set_new_league(label, type, start_date, end_date)
             return redirect(url_for('index'))
 
-        flash(error)
+        LOG.error(error)
 
     return render_template('new_league.html')
 
@@ -172,6 +169,7 @@ def new_league():
 @login_required
 def rejeu():
     """Outils de rejeu pour corriger l'ajout malencontreux via l'appli qui impacterait négativement le calcul de l'elo"""
+    LOG.info("""Outil de rejeu""")
     leagues = league_service.get_all_leagues()
     error = None
     i = elo.Implementation()
@@ -200,37 +198,37 @@ def rejeu():
                 deck_player_2_id = match['deck_2_id']
                 winner_id = match['winner_player_id']
 
-                #  rechercher l'elo des 2 joueur pour la league en cours
-                elo_player_1 = player_service.get_elo_by_ids(player_1_id, league_id)
-                elo_player_2 = player_service.get_elo_by_ids(player_2_id, league_id)
-                # insérer dans Implementation les joueur, leur rating et leurs decks
-                i.addPlayer(player_1_id, None if elo_player_1 is None else elo_player_1['elo'])
-                i.addPlayer(player_2_id, None if elo_player_2 is None else elo_player_2['elo'])
-                i.addDeck(deck_player_1_id)
-                i.addDeck(deck_player_2_id)
-
-                i.processEloForMatch(player_1_id, deck_player_1_id, player_2_id, deck_player_2_id, winner=winner_id)
+                add_new_match_with_elo(deck_player_1_id, deck_player_2_id, i, league_id, player_1_id, player_2_id,
+                                       winner_id)
 
                 player_service.save_players_elo(i.getPlayer(player_1_id).name, i.getPlayerRating(player_1_id),
                                                 league_id)
                 player_service.save_players_elo(i.getPlayer(player_2_id).name, i.getPlayerRating(player_2_id),
                                                 league_id)
-
-                # print("-------------------")
-                # print(winner_id, " a gagné")
-                # print(i.getPlayer(player_1_id).name, " a ", i.getPlayerRating(player_1_id))
-                # print(i.getPlayer(player_2_id).name, " a ", i.getPlayerRating(player_2_id))
-                # print("-------------------")
-
-        return redirect(url_for('index'))
+        LOG.error(error)
+        return redirect(url_for('league'))
 
     return render_template('rejeu.html', **locals())
+
+
+def add_new_match_with_elo(deck_player_1_id, deck_player_2_id, i, league_id, player_1_id, player_2_id, winner_id):
+    #  rechercher l'elo des 2 joueur pour la league en cours
+    elo_player_1 = player_service.get_elo_by_ids(player_1_id, league_id)
+    elo_player_2 = player_service.get_elo_by_ids(player_2_id, league_id)
+    # insérer dans Implementation les joueur, leur rating et leurs decks
+    i.addPlayer(player_1_id, None if elo_player_1 is None else elo_player_1['elo'])
+    i.addPlayer(player_2_id, None if elo_player_2 is None else elo_player_2['elo'])
+    i.addDeck(deck_player_1_id)
+    i.addDeck(deck_player_2_id)
+    i.processEloForMatch(player_1_id, deck_player_1_id, player_2_id, deck_player_2_id, winner=winner_id)
+
+    LOG.info(f" Added match for player : {player_1_id} and player : {player_2_id} ")
 
 
 # Auth route
 @bp_auth.route('/login', methods=('GET', 'POST'))
 def login():
-    """ login page route"""
+    LOG.info(""" login page route""")
     if request.method == 'POST':
         password = request.form['password']
         error = None
@@ -246,21 +244,21 @@ def login():
             session['user_id'] = user['id']
             return redirect(url_for('index'))
 
-        flash(error)
+        LOG.error(error)
 
     return render_template('auth/login.html')
 
 
 @bp_auth.route('/logout')
 def logout():
-    """ logout page route"""
+    LOG.info(""" logout page route""")
     session.clear()
     return redirect(url_for('index'))
 
 
 @bp_auth.route('/signup', methods=('GET', 'POST'))
 def signup():
-    """ signup page route"""
+    LOG.info(""" signup page route""")
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
@@ -278,11 +276,17 @@ def signup():
             UserService.create_or_update_user(username, generate_password_hash(password), email)
             return redirect(url_for('auth.login'))
 
-        flash(error, category='message')
+        LOG.error(error)
 
     return render_template('auth/signup.html')
 
 
 @app.errorhandler(404)
 def page_not_found(error):
+    LOG.error('An exception occurred during a request.', error)
     return render_template('page_not_found.html'), 404
+
+@app.errorhandler(500)
+def server_error(error):
+    LOG.error('An exception occurred during a request.', error)
+    return 'Internal Server Error', 500
