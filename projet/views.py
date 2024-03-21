@@ -10,6 +10,7 @@ from .utils import utils
 import logging
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s : [%(levelname)s] %(name)s %(threadName)s : %(message)s')
+logging.getLogger('werkzeug').setLevel(logging.ERROR)
 
 app = Flask(__name__)
 bp_auth = auth.bp
