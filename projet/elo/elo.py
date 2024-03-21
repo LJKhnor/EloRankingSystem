@@ -4,8 +4,13 @@ All of the classes for EloPy. The users should only interact with the Implementa
 @author - Lejeune Joachim, Rosier Gilles originally create by Hank Hang Kai Sheehan
 """
 
+from flask import Flask
 from ..model.deck import _Deck
 from ..model.player import _Player
+import logging
+
+app = Flask(__name__)
+LOG = app.logger
 
 
 class Implementation:
@@ -163,8 +168,6 @@ class Implementation:
             deckExpected2 = deck2.compareRating(deck1)
 
 
-
-            k = len(self.__getPlayerList()) * 2
             # deck_k = 25
             deck_k = len(self.__getDeckList()) * 2
 
@@ -191,8 +194,8 @@ class Implementation:
             else:
                 raise Exception('One of the names must be the winner or draw must be True')
 
-            newRating1 = rating1 + k * (score1 - expected1)
-            newRating2 = rating2 + k * (score2 - expected2)
+            newRating1 = rating1 + self.process_k(player1) * (score1 - expected1)
+            newRating2 = rating2 + self.process_k(player2) * (score2 - expected2)
             newDeckRating1 = deckRating1 + deck_k * (deckScore1 - deckExpected1)
             newDeckRating2 = deckRating2 + deck_k * (deckScore2 - deckExpected2)
 
@@ -220,6 +223,19 @@ class Implementation:
 
         else:
             raise Exception("One or more player you provide don't exist in this Elo league.")
+
+    def process_k(self, player):
+        """
+        Return the k value for the new rating
+        In real the k depends of the match number of the player, but here, the more you are powerful, the less you earn
+        """
+        rating = player.rating
+        if rating < 1100:
+            return 40
+        elif 1100 < rating < 1300:
+            return 20
+        else:
+            return 10
 
     def getPlayerRating(self, name):
         """
