@@ -18,6 +18,7 @@ bp_business = business.bp
 
 LOG = app.logger
 
+
 @bp_business.route('/')
 @login_required
 def index():
@@ -124,7 +125,9 @@ def new_match():
                                    winner_id)
 
             player_service.save_players_elo(i.getPlayer(player_1_id).name, i.getPlayerRating(player_1_id), league_id)
+            deck_service.save_deck_elo(i.getDeck(deck_player_1_id).name, league_id, i.getDeckRating(deck_player_1_id))
             player_service.save_players_elo(i.getPlayer(player_2_id).name, i.getPlayerRating(player_2_id), league_id)
+            deck_service.save_deck_elo(i.getDeck(deck_player_2_id).name, league_id, i.getDeckRating(deck_player_2_id))
 
             match_service.save_new_match(league_id, date, player_1_id, player_2_id, deck_player_1_id, deck_player_2_id,
                                          winner_id)
@@ -206,11 +209,13 @@ def rejeu():
 
                 player_service.save_players_elo(i.getPlayer(player_1_id).name, i.getPlayerRating(player_1_id),
                                                 league_id)
+                deck_service.save_deck_elo(i.getDeck(deck_player_1_id).name, league_id, i.getDeckRating(deck_player_1_id))
                 player_service.save_players_elo(i.getPlayer(player_2_id).name, i.getPlayerRating(player_2_id),
                                                 league_id)
+                deck_service.save_deck_elo(i.getDeck(deck_player_2_id).name, league_id, i.getDeckRating(deck_player_2_id))
         else:
             LOG.error(error)
-            
+
         return redirect(url_for('league'))
 
     return render_template('rejeu.html', **locals())
@@ -220,11 +225,13 @@ def add_new_match_with_elo(deck_player_1_id, deck_player_2_id, i, league_id, pla
     #  rechercher l'elo des 2 joueur pour la league en cours
     elo_player_1 = player_service.get_elo_by_ids(player_1_id, league_id)
     elo_player_2 = player_service.get_elo_by_ids(player_2_id, league_id)
+    elo_deck_1 = deck_service.get_elo_by_ids(deck_player_1_id, league_id)
+    elo_deck_2 = deck_service.get_elo_by_ids(deck_player_2_id, league_id)
     # insérer dans Implementation les joueur, leur rating et leurs decks
     i.addPlayer(player_1_id, None if elo_player_1 is None else elo_player_1['elo'])
     i.addPlayer(player_2_id, None if elo_player_2 is None else elo_player_2['elo'])
-    i.addDeck(deck_player_1_id)
-    i.addDeck(deck_player_2_id)
+    i.addDeck(deck_player_1_id, None if elo_deck_1 is None else elo_deck_1['elo'])
+    i.addDeck(deck_player_2_id, None if elo_deck_2 is None else elo_deck_2['elo'])
     i.processEloForMatch(player_1_id, deck_player_1_id, player_2_id, deck_player_2_id, winner=winner_id)
 
     LOG.info(f" Added match for player : {player_1_id} and player : {player_2_id} ")
@@ -292,6 +299,7 @@ def signup():
 def page_not_found(error):
     LOG.error('An exception occurred during a request.', error)
     return render_template('page_not_found.html'), 404
+
 
 @app.errorhandler(500)
 def server_error(error):

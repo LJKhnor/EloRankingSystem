@@ -167,10 +167,6 @@ class Implementation:
             deckExpected1 = deck1.compareRating(deck2)
             deckExpected2 = deck2.compareRating(deck1)
 
-
-            # deck_k = 25
-            deck_k = len(self.__getDeckList()) * 2
-
             rating1 = player1.rating
             rating2 = player2.rating
             deckRating1 = deck1.rating
@@ -196,8 +192,8 @@ class Implementation:
 
             newRating1 = rating1 + self.process_k(player1) * (score1 - expected1)
             newRating2 = rating2 + self.process_k(player2) * (score2 - expected2)
-            newDeckRating1 = deckRating1 + deck_k * (deckScore1 - deckExpected1)
-            newDeckRating2 = deckRating2 + deck_k * (deckScore2 - deckExpected2)
+            newDeckRating1 = deckRating1 + self.process_k(deck1) * (deckScore1 - deckExpected1)
+            newDeckRating2 = deckRating2 + self.process_k(deck2) * (deckScore2 - deckExpected2)
 
             if newRating1 < 0:
                 newRating1 = 0
@@ -248,9 +244,9 @@ class Implementation:
 
     def getDeckRating(self, name):
         """
-        Returns the rating of the player with the given name.
-        @param name - name of the player.
-        @return - the rating of the player with the given name.
+        Returns the rating of the deck with the given name.
+        @param name - name of the deck.
+        @return - the rating of the deck with the given name.
         """
         deck = self.getDeck(name)
         return deck.rating

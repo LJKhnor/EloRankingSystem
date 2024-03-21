@@ -11,3 +11,15 @@ def get_deck_by_id(id):
     return db.get_db().execute(
         'select * from deck where id = ?', (id,)
     ).fetchone()
+
+def save_deck_elo(deck_id, league_id, elo):
+    db.get_db().execute(
+        'insert or replace into deck_league (deck_id, league_id, elo) VALUES (?, ?, ?)',
+        (deck_id, league_id, elo)
+    )
+    db.get_db().commit()
+    
+def get_elo_by_ids(deck_id, league_id):
+    return db.get_db().execute(
+        'select * from deck_league where deck_id = ? and league_id = ?', (deck_id, league_id)
+    ).fetchone()
