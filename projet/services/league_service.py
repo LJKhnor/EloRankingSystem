@@ -50,6 +50,19 @@ def get_players_from_league(league_id):
         'order by p.id ', (league_id)
     ).fetchall()
 
+def getAllMatchesFromOneLeague(league_id):
+    return db.get_db().execute(
+        'select * from player_deck_league pdl where pdl.league_id = ?', (league_id)
+    ).fetchall()
+
+def deleteAllEloForPlayersForOneLeague(league_id):
+    db.get_db().execute(
+        'DELETE FROM player_league where league_id = ?',
+        (league_id)
+    )
+
+    db.get_db().commit()
+
 
 def get_number_play(player_id, league_id):
     return db.get_db().execute(
