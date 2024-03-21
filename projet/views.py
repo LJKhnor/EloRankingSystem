@@ -130,7 +130,8 @@ def new_match():
                                          winner_id)
             return redirect(url_for('index'))
 
-        LOG.error(error)
+        else:
+            LOG.error(error)
 
     return render_template('new_match.html',
                            **locals())  # locals() return all the variable set in the scope of the method
@@ -161,7 +162,8 @@ def new_league():
             league_service.set_new_league(label, type, start_date, end_date)
             return redirect(url_for('index'))
 
-        LOG.error(error)
+        else:
+            LOG.error(error)
 
     return render_template('new_league.html')
 
@@ -206,7 +208,9 @@ def rejeu():
                                                 league_id)
                 player_service.save_players_elo(i.getPlayer(player_2_id).name, i.getPlayerRating(player_2_id),
                                                 league_id)
-        LOG.error(error)
+        else:
+            LOG.error(error)
+            
         return redirect(url_for('league'))
 
     return render_template('rejeu.html', **locals())
@@ -245,7 +249,8 @@ def login():
             session['user_id'] = user['id']
             return redirect(url_for('index'))
 
-        LOG.error(error)
+        else:
+            LOG.error(error)
 
     return render_template('auth/login.html')
 
@@ -277,7 +282,8 @@ def signup():
             UserService.create_or_update_user(username, generate_password_hash(password), email)
             return redirect(url_for('auth.login'))
 
-        LOG.error(error)
+        else:
+            LOG.error(error)
 
     return render_template('auth/signup.html')
 
