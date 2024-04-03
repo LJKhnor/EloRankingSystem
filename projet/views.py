@@ -4,6 +4,8 @@ from .auth import login_required
 from .db import get_db
 from werkzeug.security import check_password_hash, generate_password_hash
 from .services import UserService, league_service, player_service, deck_service, match_service
+from matplotlib.figure import Figure
+from io import BytesIO
 from .elo import elo
 from .utils import utils
 
