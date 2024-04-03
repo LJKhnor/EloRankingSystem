@@ -55,8 +55,12 @@ def league():
             league_infos = league_service.get_league_infos(league_id)
             # ratio parts
             rankings = league_service.get_league_ranking(league_id)
+
+            rankings_deck = deck_service.get_deck_ranking(league_id)
+
             playersForLeague = league_service.get_players_from_league(league_id)
             rankings_html = []
+            rankings_deck_html = []
             ratio_win_lose_html = []
             nbCols = (playersForLeague.__len__() + 1)
             nbRows = (playersForLeague.__len__() + 1)
@@ -65,11 +69,15 @@ def league():
             for ranking in rankings:
                 rankings_html.append((ranking['name'], round(ranking['elo'], 2), utils.processColor(ranking, rankings)))
 
+            for ranking_deck in rankings_deck:
+                rankings_deck_html.append((ranking_deck['name'], round(ranking_deck['elo'], 2),
+                                           utils.processColor(ranking_deck, rankings_deck)))
+
             for player in playersForLeague:
                 nbPlay = league_service.get_number_play(player['id'], league_id)
                 nbWin = league_service.get_number_win(player['id'], league_id)
                 nbLose = nbPlay[0] - nbWin[0]
-                ratio_win_lose_html.append(((player['name'], nbPlay[0], nbWin[0], nbLose)))
+                ratio_win_lose_html.append((player['name'], nbPlay[0], nbWin[0], nbLose))
 
             for i in range(playersForLeague.__len__()):
                 nb_matches_player = []
@@ -209,10 +217,12 @@ def rejeu():
 
                 player_service.save_players_elo(i.getPlayer(player_1_id).name, i.getPlayerRating(player_1_id),
                                                 league_id)
-                deck_service.save_deck_elo(i.getDeck(deck_player_1_id).name, league_id, i.getDeckRating(deck_player_1_id))
+                deck_service.save_deck_elo(i.getDeck(deck_player_1_id).name, league_id,
+                                           i.getDeckRating(deck_player_1_id))
                 player_service.save_players_elo(i.getPlayer(player_2_id).name, i.getPlayerRating(player_2_id),
                                                 league_id)
-                deck_service.save_deck_elo(i.getDeck(deck_player_2_id).name, league_id, i.getDeckRating(deck_player_2_id))
+                deck_service.save_deck_elo(i.getDeck(deck_player_2_id).name, league_id,
+                                           i.getDeckRating(deck_player_2_id))
         else:
             LOG.error(error)
 

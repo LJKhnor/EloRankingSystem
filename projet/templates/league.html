@@ -60,10 +60,10 @@
 </div>
 
 <div class="box m-4" style="display: flex">
-    <div class="box m-4" style="height: 25%;width: 33%">
+    <div class="box m-4" style="height: 25%">
         <div class="content has-text-centered ">
             <table class="table is-narrow is-striped">
-                <caption class="caption">Classement ELO</caption>
+                <caption class="caption">Classement ELO Joueur</caption>
                 {% for item in rankings_html %}
                 <tbody>
                 <td value="{{ item[0] }}">
@@ -77,8 +77,27 @@
             </table>
         </div>
     </div>
+    <div class="box m-4" style="height: 25%">
+        <div class="content has-text-centered ">
+            <table class="table is-narrow is-striped">
+                <caption class="caption">Classement ELO Deck</caption>
+                {% for item in rankings_deck_html %}
+                <tbody>
+                <td value="{{ item[0] }}">
+                    {{ item[0] }}
+                </td>
+                <td class="td-elo" value="{{ item[1] }}" style="background-color: {{item[2]}}">
+                    {{ item[1] }}
+                </td>
+                </tbody>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+</div>
 
-    <div class="box m-4" style="flex: 1">
+<div class="box m-4">
+    <div class="box m-4" style="height: 25%">
         <div class="content has-text-centered ">
             <table class="table is-narrow is-striped">
                 <caption class="caption">Nombre de matchs joués</caption>
@@ -105,9 +124,7 @@
             </table>
         </div>
     </div>
-</div>
 
-<div class="box m-4" style="display: flex">
     <div class="box m-4" style="flex: 1">
         <table class="table is-narrow is-striped">
             <caption class="caption">Nombre de parties jouées, gagnées et perdues</caption>
