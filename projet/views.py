@@ -4,8 +4,6 @@ from .auth import login_required
 from .db import get_db
 from werkzeug.security import check_password_hash, generate_password_hash
 from .services import UserService, league_service, player_service, deck_service, match_service
-from matplotlib.figure import Figure
-from io import BytesIO
 from .elo import elo
 from .utils import utils
 
@@ -202,8 +200,9 @@ def rejeu():
             # recupérer l'ensemble des matchs de la league choisie
             matches = league_service.getAllMatchesFromOneLeague(league_id)
 
-            # vider les elo des joueurs pour la league choisie
+            # vider les elo des joueurs et de leurs decks pour la league choisie
             league_service.deleteAllEloForPlayersForOneLeague(league_id)
+            league_service.deleteAllEloForDecksForOneLeague(league_id)
 
             # reppasser chaque match dans l implementation
             for match in matches:

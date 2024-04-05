@@ -63,6 +63,13 @@ def deleteAllEloForPlayersForOneLeague(league_id):
 
     db.get_db().commit()
 
+def deleteAllEloForDecksForOneLeague(league_id):
+    db.get_db().execute(
+        'DELETE FROM deck_league where league_id = ?',
+        (league_id)
+    )
+
+    db.get_db().commit()
 
 def get_number_play(player_id, league_id):
     return db.get_db().execute(
