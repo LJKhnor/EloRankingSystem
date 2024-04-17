@@ -14,7 +14,7 @@ class _Player:
 
     def compareRating(self, opponent):
         """
-        Compares the two ratings of the this player and the opponent.
+        Compares the two ratings of the player and his/her opponent.
         @param opponent - the player to compare against.
         @returns - The expected score between the two players.
         """

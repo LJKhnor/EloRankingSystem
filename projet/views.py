@@ -7,7 +7,7 @@ from .services import UserService, league_service, player_service, deck_service,
 from .elo import elo
 from .utils import utils
 
-import logging
+import logging, csv
 
 logging.basicConfig(level=logging.DEBUG, format='%(asctime)s : [%(levelname)s] %(name)s %(threadName)s : %(message)s')
 logging.getLogger('werkzeug').setLevel(logging.ERROR)
@@ -245,7 +245,17 @@ def add_new_match_with_elo(deck_player_1_id, deck_player_2_id, i, league_id, pla
     i.addDeck(deck_player_2_id, None if elo_deck_2 is None else elo_deck_2['elo'])
     i.processEloForMatch(player_1_id, deck_player_1_id, player_2_id, deck_player_2_id, winner=winner_id)
 
-    LOG.info(f" Added match for player : {player_1_id} and player : {player_2_id} ")
+    elo_player_1 = 0 if elo_player_1 is None else elo_player_1['elo']
+    elo_player_2 = 0 if elo_player_2 is None else elo_player_2['elo']
+    LOG.info(f" Added match for player : {player_1_id} with ({elo_player_1}) and player : {player_2_id} with ({elo_player_2}) ")
+
+    # pour générer un graphique via matplotlib
+
+    # pour générer un csv avec les valeurs de chaque elo pour chaque joueur
+    # with open('test_data_elo.csv', 'a', newline='') as csvfile:
+    #     datawriter = csv.writer(csvfile, delimiter=',', quoting=csv.QUOTE_MINIMAL)
+    #     datawriter.writerow([player_1_id,elo_player_1])
+    #     datawriter.writerow([player_2_id,elo_player_2])
 
 
 # Auth route
