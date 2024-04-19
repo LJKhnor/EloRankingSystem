@@ -1,8 +1,6 @@
-"""
-The __init__.py serves double duty: it will contain the application factory,
-and it tells Python that the projet directory should be treated as a package.
-Documentation : https://flask.palletsprojects.com/en/3.0.x/tutorial/factory/
-"""
+"""The __init__.py serves double duty: it will contain the application factory, and it tells Python that the projet
+directory should be treated as a package. Documentation :
+https://flask.palletsprojects.com/en/3.0.x/tutorial/factory/"""
 
 import os
 
@@ -13,14 +11,13 @@ from . import db, auth, business
 
 
 def create_app(test_config=None):
-
     # create the app
     app = Flask(__name__, instance_relative_config=True)
 
     # create and configure the app
     app.config.from_mapping(
         SECRET_KEY='dev',
-        DATABASE=os.path.join(app.instance_path, 'projet.sqlite'),
+        DATABASE=os.path.join(app.instance_path, 'project.sqlite'),
     )
 
     if test_config is None:

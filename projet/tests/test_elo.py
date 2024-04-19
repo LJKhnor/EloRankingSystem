@@ -1,6 +1,7 @@
 import unittest
 from projet.elo.elo import Implementation
 
+
 class TestImplementation(unittest.TestCase):
 
     def setUp(self):
@@ -147,4 +148,3 @@ class TestImplementation(unittest.TestCase):
         self.impl.recordMatch("Player 1", "Deck 1", "Player 2", "Deck 2", winner="Player 1")
         self.assertEqual(self.impl.getDeckRating("Deck 1"), 1042.0)
         self.assertEqual(self.impl.getDeckRating("Deck 2"), 958.0)
-
