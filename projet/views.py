@@ -89,9 +89,9 @@ def league():
                 nb_lose = nb_play[0] - nb_win[0]
                 ratio_win_lose_html.append((player['name'], nb_play[0], nb_win[0], nb_lose))
 
-            for i in range(len(players_for_league)):
+            for i in enumerate(players_for_league):
                 nb_matches_player = []
-                for j in range(len(players_for_league)):
+                for j in enumerate(players_for_league):
                     nb_matches = league_service.get_count_matches(players_for_league[i]['id'], players_for_league[j]['id'],
                                                                   league_id)
                     nb_matches_player.append(nb_matches[0])
@@ -201,7 +201,8 @@ def new_league():
 @bp_business.route('/rejeu', methods=('GET', 'POST'))
 @login_required
 def rejeu():
-    """Outils de rejeu pour corriger l'ajout malencontreux via l'appli qui impacterait négativement le calcul de l'elo"""
+    # pylint: disable=unused-argument
+    # Outils de rejeu pour corriger l'ajout malencontreux via l'appli qui impacterait négativement le calcul de l'elo
     LOG.info("""Outil de rejeu""")
     leagues = league_service.get_all_leagues()
     error = None
@@ -308,8 +309,6 @@ def login():
 
 
 """Logout route"""
-
-
 @bp_auth.route('/logout')
 def logout():
     LOG.info(""" logout page route""")
@@ -318,8 +317,6 @@ def logout():
 
 
 """signup route"""
-
-
 @bp_auth.route('/signup', methods=('GET', 'POST'))
 def signup():
     LOG.info(""" signup page route""")
@@ -340,15 +337,12 @@ def signup():
             UserService.create_or_update_user(username, generate_password_hash(password), email)
             return redirect(url_for('auth.login'))
 
-        else:
-            LOG.error(error)
+        LOG.error(error)
 
     return render_template('auth/signup.html')
 
 
 """Error handler method 404"""
-
-
 @app.errorhandler(404)
 def page_not_found(error):
     LOG.error('An exception occurred during a request.', error)
@@ -356,8 +350,6 @@ def page_not_found(error):
 
 
 """Error handler method 500"""
-
-
 @app.errorhandler(500)
 def server_error(error):
     LOG.error('An exception occurred during a request.', error)
