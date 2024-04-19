@@ -1,4 +1,3 @@
-#pylint:disable=E1101
 import unittest
 from projet.elo.elo import Implementation
 
