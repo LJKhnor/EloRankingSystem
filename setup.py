@@ -1,3 +1,4 @@
+"""File providing setup for the project"""
 from setuptools import setup
 
 setup(name="EloRankingSystem",
@@ -22,4 +23,3 @@ setup(name="EloRankingSystem",
          "License :: OSI Approved :: MIT License"
       ]
       )
-

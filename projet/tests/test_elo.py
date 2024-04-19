@@ -1,4 +1,5 @@
 import unittest
+
 from projet.elo.elo import Implementation
 
 
@@ -113,20 +114,20 @@ class TestImplementation(unittest.TestCase):
         self.impl.removeDeck("Deck 2")
         self.assertEqual(len(self.impl.decks), 0)
 
-    def test_recordMatch(self):
+    def test_processEloForMatch(self):
         self.impl.addPlayers(["Player 1", "Player 2"])
         self.impl.addDecks(["Deck 1", "Deck 2"])
-        self.impl.recordMatch("Player 1", "Deck 1", "Player 2", "Deck 2", winner="Player 1")
+        self.impl.processEloForMatch("Player 1", "Deck 1", "Player 2", "Deck 2", winner="Player 1")
         self.assertEqual(self.impl.getPlayer("Player 1").rating, 1042.0)
         self.assertEqual(self.impl.getPlayer("Player 2").rating, 958.0)
         self.assertEqual(self.impl.getDeck("Deck 1").rating, 1042.0)
         self.assertEqual(self.impl.getDeck("Deck 2").rating, 958.0)
-        self.impl.recordMatch("Player 1", "Deck 2", "Player 2", "Deck 1", winner="Player 2")
+        self.impl.processEloForMatch("Player 1", "Deck 2", "Player 2", "Deck 1", winner="Player 2")
         self.assertEqual(self.impl.getPlayer("Player 1").rating, 990.0389337445214)
         self.assertEqual(self.impl.getPlayer("Player 2").rating, 1009.9610662554786)
         self.assertEqual(self.impl.getDeck("Deck 1").rating, 1074.0389337445215)
         self.assertEqual(self.impl.getDeck("Deck 2").rating, 925.9610662554786)
-        self.impl.recordMatch("Player 1", "Deck 1", "Player 2", "Deck 2", draw=True)
+        self.impl.processEloForMatch("Player 1", "Deck 1", "Player 2", "Deck 2", draw=True)
         self.assertEqual(self.impl.getPlayer("Player 1").rating, 992.4445990466214)
         self.assertEqual(self.impl.getPlayer("Player 2").rating, 1007.5554009533786)
         self.assertEqual(self.impl.getDeck("Deck 1").rating, 1057.1489407522918)
@@ -137,7 +138,7 @@ class TestImplementation(unittest.TestCase):
         self.impl.addDecks(["Deck 1", "Deck 2"])
         self.assertEqual(self.impl.getPlayerRating("Player 1"), 1000)
         self.assertEqual(self.impl.getPlayerRating("Player 2"), 1000)
-        self.impl.recordMatch("Player 1", "Deck 1", "Player 2", "Deck 2", winner="Player 1")
+        self.impl.processEloForMatch("Player 1", "Deck 1", "Player 2", "Deck 2", winner="Player 1")
         self.assertEqual(self.impl.getPlayerRating("Player 1"), 1042.0)
         self.assertEqual(self.impl.getPlayerRating("Player 2"), 958.0)
 
@@ -146,6 +147,6 @@ class TestImplementation(unittest.TestCase):
         self.impl.addDecks(["Deck 1", "Deck 2"])
         self.assertEqual(self.impl.getDeckRating("Deck 1"), 1000)
         self.assertEqual(self.impl.getDeckRating("Deck 2"), 1000)
-        self.impl.recordMatch("Player 1", "Deck 1", "Player 2", "Deck 2", winner="Player 1")
+        self.impl.processEloForMatch("Player 1", "Deck 1", "Player 2", "Deck 2", winner="Player 1")
         self.assertEqual(self.impl.getDeckRating("Deck 1"), 1042.0)
         self.assertEqual(self.impl.getDeckRating("Deck 2"), 958.0)

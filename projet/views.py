@@ -1,13 +1,15 @@
-from flask import Flask, render_template, request, session, flash, redirect, url_for
+import logging
+
+from flask import Flask, render_template, request, session, redirect, url_for
+from werkzeug.security import check_password_hash, generate_password_hash
+
 from . import auth, business
 from .auth import login_required
-from .db import get_db
-from werkzeug.security import check_password_hash, generate_password_hash
-from .services import UserService, league_service, player_service, deck_service, match_service
 from .elo import elo
+from .services import UserService, league_service, player_service, deck_service, match_service
 from .utils import utils
 
-import logging, csv
+# import csv
 
 logging.basicConfig(level=logging.DEBUG, format='%(asctime)s : [%(levelname)s] %(name)s %(threadName)s : %(message)s')
 logging.getLogger('werkzeug').setLevel(logging.ERROR)
