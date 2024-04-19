@@ -1,5 +1,7 @@
+#pylint:disable=E1101
 import unittest
 from projet.elo.elo import Implementation
+
 
 @unittest.skip("need to be fixed")
 class TestImplementation(unittest.TestCase):
