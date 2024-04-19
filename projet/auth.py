@@ -1,10 +1,9 @@
 import functools
 
 from flask import (
-    Blueprint, flash, g, redirect, render_template, request, session, url_for
+    Blueprint, g, redirect, session, url_for
 )
-from werkzeug.security import check_password_hash, generate_password_hash
-from .db import get_db
+
 from .services import UserService
 
 """
@@ -16,6 +15,7 @@ https://flask-fr.readthedocs.io/tutorial/views/
 
 bp = Blueprint('auth', __name__, url_prefix='/auth')
 
+
 @bp.before_app_request
 def load_logged_in_user():
     user_id = session.get('user_id')
@@ -24,6 +24,7 @@ def load_logged_in_user():
         g.user = None
     else:
         g.user = UserService.get_user_by_id()
+
 
 def login_required(view):
     @functools.wraps(view)
