@@ -1,3 +1,4 @@
+"""Views module"""
 import logging
 
 from flask import Flask, render_template, request, session, redirect, url_for
@@ -20,10 +21,13 @@ bp_business = business.bp
 
 LOG = app.logger
 
+"""Home route"""
+
 
 @bp_business.route('/')
 @login_required
 def index():
+    # pylint: disable=unused-argument
     LOG.info(""" Home route""")
     if request.method == 'GET':
         matches = match_service.get_last_five_matches()
@@ -43,9 +47,13 @@ def index():
     return render_template('index.html', **locals())
 
 
+"""League route"""
+
+
 @bp_business.route('/league', methods=('GET', 'POST'))
 @login_required
 def league():
+    # pylint: disable=unused-argument
     LOG.info(""" league page route""")
 
     leagues = league_service.get_all_leagues()
@@ -60,12 +68,12 @@ def league():
 
             rankings_deck = deck_service.get_deck_ranking(league_id)
 
-            playersForLeague = league_service.get_players_from_league(league_id)
+            players_for_league = league_service.get_players_from_league(league_id)
             rankings_html = []
             rankings_deck_html = []
             ratio_win_lose_html = []
-            nbCols = (playersForLeague.__len__() + 1)
-            nbRows = (playersForLeague.__len__() + 1)
+            nb_cols = (len(players_for_league) + 1)
+            nb_rows = (len(players_for_league) + 1)
             nb_matches_html = []
 
             for ranking in rankings:
@@ -75,16 +83,16 @@ def league():
                 rankings_deck_html.append((ranking_deck['name'], round(ranking_deck['elo'], 2),
                                            utils.processColor(ranking_deck, rankings_deck)))
 
-            for player in playersForLeague:
-                nbPlay = league_service.get_number_play(player['id'], league_id)
-                nbWin = league_service.get_number_win(player['id'], league_id)
-                nbLose = nbPlay[0] - nbWin[0]
-                ratio_win_lose_html.append((player['name'], nbPlay[0], nbWin[0], nbLose))
+            for player in players_for_league:
+                nb_play = league_service.get_number_play(player['id'], league_id)
+                nb_win = league_service.get_number_win(player['id'], league_id)
+                nb_lose = nb_play[0] - nb_win[0]
+                ratio_win_lose_html.append((player['name'], nb_play[0], nb_win[0], nb_lose))
 
-            for i in range(playersForLeague.__len__()):
+            for i in range(len(players_for_league)):
                 nb_matches_player = []
-                for j in range(playersForLeague.__len__()):
-                    nb_matches = league_service.get_count_matches(playersForLeague[i]['id'], playersForLeague[j]['id'],
+                for j in range(len(players_for_league)):
+                    nb_matches = league_service.get_count_matches(players_for_league[i]['id'], players_for_league[j]['id'],
                                                                   league_id)
                     nb_matches_player.append(nb_matches[0])
                 nb_matches_html.append(nb_matches_player)
@@ -92,8 +100,12 @@ def league():
     return render_template('league.html', **locals())
 
 
+"""New match route"""
+
+
 @bp_business.route('/new_match', methods=('GET', 'POST'))
 def new_match():
+    # pylint: disable=unused-argument
     LOG.info(""" new match route """)
     i = elo.Implementation()
 
@@ -102,7 +114,7 @@ def new_match():
     decks = deck_service.get_all_decks()
 
     if request.method == 'GET':
-        if request.values != None:
+        if request.values is not None:
             pass
 
     if request.method == 'POST':
@@ -143,28 +155,31 @@ def new_match():
                                          winner_id)
             return redirect(url_for('index'))
 
-        else:
-            LOG.error(error)
+        LOG.error(error)
 
     return render_template('new_match.html',
                            **locals())  # locals() return all the variable set in the scope of the method
 
 
+"""New league route"""
+
+
 @bp_business.route('/new_league', methods=('GET', 'POST'))
 @login_required
 def new_league():
+    # pylint: disable=unused-argument
     LOG.info(""" new league route """)
 
     if request.method == 'POST':
         error = None
         label = request.form['label']
-        type = request.form['type']
+        type_league = request.form['type']
         start_date = request.form['start_date']
         end_date = request.form['end_date']
 
         if label is None:
             error = 'Le nom de league est requis'
-        if type is None:
+        if type_league is None:
             error = 'Le type de league est requis'
         if start_date is None or end_date is None:
             error = 'Les dates sont obligatoires'
@@ -172,13 +187,15 @@ def new_league():
             error = f"League {label} is already registered."
 
         if error is None:
-            league_service.set_new_league(label, type, start_date, end_date)
+            league_service.set_new_league(label, type_league, start_date, end_date)
             return redirect(url_for('index'))
 
-        else:
-            LOG.error(error)
+        LOG.error(error)
 
     return render_template('new_league.html')
+
+
+"""Rejeu route"""
 
 
 @bp_business.route('/rejeu', methods=('GET', 'POST'))
@@ -234,6 +251,9 @@ def rejeu():
     return render_template('rejeu.html', **locals())
 
 
+"""Add new match and process the elo for players and decks"""
+
+
 def add_new_match_with_elo(deck_player_1_id, deck_player_2_id, i, league_id, player_1_id, player_2_id, winner_id):
     #  rechercher l'elo des 2 joueur pour la league en cours
     elo_player_1 = player_service.get_elo_by_ids(player_1_id, league_id)
@@ -249,7 +269,8 @@ def add_new_match_with_elo(deck_player_1_id, deck_player_2_id, i, league_id, pla
 
     elo_player_1 = 0 if elo_player_1 is None else elo_player_1['elo']
     elo_player_2 = 0 if elo_player_2 is None else elo_player_2['elo']
-    LOG.info(f" Added match for player : {player_1_id} with ({elo_player_1}) and player : {player_2_id} with ({elo_player_2}) ")
+    LOG.info(
+        f" Added match for player : {player_1_id} with ({elo_player_1}) and player : {player_2_id} with ({elo_player_2}) ")
 
     # pour générer un graphique via matplotlib
 
@@ -260,7 +281,9 @@ def add_new_match_with_elo(deck_player_1_id, deck_player_2_id, i, league_id, pla
     #     datawriter.writerow([player_2_id,elo_player_2])
 
 
-# Auth route
+"""Auth route"""
+
+
 @bp_auth.route('/login', methods=('GET', 'POST'))
 def login():
     LOG.info(""" login page route""")
@@ -279,10 +302,12 @@ def login():
             session['user_id'] = user['id']
             return redirect(url_for('index'))
 
-        else:
-            LOG.error(error)
+        LOG.error(error)
 
     return render_template('auth/login.html')
+
+
+"""Logout route"""
 
 
 @bp_auth.route('/logout')
@@ -290,6 +315,9 @@ def logout():
     LOG.info(""" logout page route""")
     session.clear()
     return redirect(url_for('index'))
+
+
+"""signup route"""
 
 
 @bp_auth.route('/signup', methods=('GET', 'POST'))
@@ -318,10 +346,16 @@ def signup():
     return render_template('auth/signup.html')
 
 
+"""Error handler method 404"""
+
+
 @app.errorhandler(404)
 def page_not_found(error):
     LOG.error('An exception occurred during a request.', error)
     return render_template('page_not_found.html'), 404
+
+
+"""Error handler method 500"""
 
 
 @app.errorhandler(500)

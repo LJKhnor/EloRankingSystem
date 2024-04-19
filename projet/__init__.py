@@ -4,9 +4,7 @@ https://flask.palletsprojects.com/en/3.0.x/tutorial/factory/"""
 
 import os
 
-from flask import Flask
 from projet.views import *
-from testElo import main
 from . import db, auth, business
 
 

@@ -18,8 +18,8 @@ setup(name="EloRankingSystem",
       include_package_data=True,
       license="MIT",
       classifiers=[
-         "Development Status :: 5 - Production/Stable",
-         "Topic :: Utilities",
-         "License :: OSI Approved :: MIT License"
+          "Development Status :: 5 - Production/Stable",
+          "Topic :: Utilities",
+          "License :: OSI Approved :: MIT License"
       ]
       )
