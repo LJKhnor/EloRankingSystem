@@ -1,4 +1,4 @@
-# pylint: disable=missing-function-docstring,unused-argument,too-many-arguments,line-to-long
+# pylint: disable=missing-function-docstring, unused-argument, too-many-arguments
 """
 Created 06-01-2024
 All of the classes for EloPy. The users should only interact with the Implementation class.

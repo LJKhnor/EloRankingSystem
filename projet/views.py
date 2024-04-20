@@ -1,5 +1,5 @@
 """Views module"""
-# pylint: disable=missing-function-docstring,unused-argument,too-many-arguments,line-to-long
+# pylint: disable=missing-function-docstring, unused-argument, too-many-arguments
 import logging
 
 from flask import Flask, render_template, request, session, redirect, url_for

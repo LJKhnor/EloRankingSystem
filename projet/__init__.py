@@ -1,7 +1,7 @@
 """The __init__.py serves double duty: it will contain the application factory, and it tells Python that the projet
 directory should be treated as a package. Documentation :
 https://flask.palletsprojects.com/en/3.0.x/tutorial/factory/"""
-# pylint: disable=missing-function-docstring,unused-argument,too-many-arguments,line-to-long
+# pylint: disable=missing-function-docstring, unused-argument, too-many-arguments
 import os
 
 from projet.views import *

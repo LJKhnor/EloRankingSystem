@@ -1,4 +1,4 @@
-# pylint: disable=missing-function-docstring,unused-argument,too-many-arguments,line-to-long
+# pylint: disable=missing-function-docstring, unused-argument, too-many-arguments
 from projet import create_app
 
 """This piece of code specify which of our class is the main project class.More information on 
