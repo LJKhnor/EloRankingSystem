@@ -1,4 +1,5 @@
 """Views module"""
+# pylint: disable=missing-function-docstring
 import logging
 
 from flask import Flask, render_template, request, session, redirect, url_for
@@ -92,7 +93,8 @@ def league():
             for i in enumerate(players_for_league):
                 nb_matches_player = []
                 for j in enumerate(players_for_league):
-                    nb_matches = league_service.get_count_matches(players_for_league[i]['id'], players_for_league[j]['id'],
+                    nb_matches = league_service.get_count_matches(players_for_league[i]['id'],
+                                                                  players_for_league[j]['id'],
                                                                   league_id)
                     nb_matches_player.append(nb_matches[0])
                 nb_matches_html.append(nb_matches_player)
@@ -202,6 +204,7 @@ def new_league():
 @login_required
 def rejeu():
     # pylint: disable=unused-argument
+
     # Outils de rejeu pour corriger l'ajout malencontreux via l'appli qui impacterait négativement le calcul de l'elo
     LOG.info("""Outil de rejeu""")
     leagues = league_service.get_all_leagues()
@@ -252,9 +255,7 @@ def rejeu():
     return render_template('rejeu.html', **locals())
 
 
-"""Add new match and process the elo for players and decks"""
-
-
+# Add new match and process the elo for players and decks
 def add_new_match_with_elo(deck_player_1_id, deck_player_2_id, i, league_id, player_1_id, player_2_id, winner_id):
     #  rechercher l'elo des 2 joueur pour la league en cours
     elo_player_1 = player_service.get_elo_by_ids(player_1_id, league_id)
@@ -282,9 +283,7 @@ def add_new_match_with_elo(deck_player_1_id, deck_player_2_id, i, league_id, pla
     #     datawriter.writerow([player_2_id,elo_player_2])
 
 
-"""Auth route"""
-
-
+# Auth route
 @bp_auth.route('/login', methods=('GET', 'POST'))
 def login():
     LOG.info(""" login page route""")
@@ -352,6 +351,5 @@ def page_not_found(error):
 # Error handler method 500
 @app.errorhandler(500)
 def server_error(error):
-    # pylint: disable=missing-function-docstring
     LOG.error('An exception occurred during a request.', error)
     return 'Internal Server Error', 500
