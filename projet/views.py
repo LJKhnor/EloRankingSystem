@@ -1,5 +1,6 @@
 """Views module"""
 # pylint: disable=missing-function-docstring
+# pylint: disable=unused-argument
 import logging
 
 from flask import Flask, render_template, request, session, redirect, url_for
@@ -28,7 +29,7 @@ LOG = app.logger
 @bp_business.route('/')
 @login_required
 def index():
-    # pylint: disable=unused-argument
+    
     LOG.info(""" Home route""")
     if request.method == 'GET':
         matches = match_service.get_last_five_matches()
@@ -54,7 +55,7 @@ def index():
 @bp_business.route('/league', methods=('GET', 'POST'))
 @login_required
 def league():
-    # pylint: disable=unused-argument
+    
     LOG.info(""" league page route""")
 
     leagues = league_service.get_all_leagues()
@@ -107,7 +108,7 @@ def league():
 
 @bp_business.route('/new_match', methods=('GET', 'POST'))
 def new_match():
-    # pylint: disable=unused-argument
+    
     LOG.info(""" new match route """)
     i = elo.Implementation()
 
@@ -169,7 +170,7 @@ def new_match():
 @bp_business.route('/new_league', methods=('GET', 'POST'))
 @login_required
 def new_league():
-    # pylint: disable=unused-argument
+    
     LOG.info(""" new league route """)
 
     if request.method == 'POST':
@@ -203,7 +204,7 @@ def new_league():
 @bp_business.route('/rejeu', methods=('GET', 'POST'))
 @login_required
 def rejeu():
-    # pylint: disable=unused-argument
+    
 
     # Outils de rejeu pour corriger l'ajout malencontreux via l'appli qui impacterait négativement le calcul de l'elo
     LOG.info("""Outil de rejeu""")
