@@ -308,7 +308,7 @@ def login():
     return render_template('auth/login.html')
 
 
-"""Logout route"""
+# Logout route
 @bp_auth.route('/logout')
 def logout():
     LOG.info(""" logout page route""")
@@ -316,7 +316,7 @@ def logout():
     return redirect(url_for('index'))
 
 
-"""signup route"""
+# Signup route
 @bp_auth.route('/signup', methods=('GET', 'POST'))
 def signup():
     LOG.info(""" signup page route""")
@@ -342,15 +342,16 @@ def signup():
     return render_template('auth/signup.html')
 
 
-"""Error handler method 404"""
+# Error handler method 404
 @app.errorhandler(404)
 def page_not_found(error):
     LOG.error('An exception occurred during a request.', error)
     return render_template('page_not_found.html'), 404
 
 
-"""Error handler method 500"""
+# Error handler method 500
 @app.errorhandler(500)
 def server_error(error):
+    # pylint: disable=missing-function-docstring
     LOG.error('An exception occurred during a request.', error)
     return 'Internal Server Error', 500
