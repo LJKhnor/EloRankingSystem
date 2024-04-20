@@ -1,3 +1,4 @@
+# pylint: disable=missing-function-docstring,unused-argument,too-many-arguments,line-to-long
 import sqlite3
 
 import click
@@ -38,6 +39,6 @@ def init_db():
 @click.command('init-db')
 @with_appcontext
 def init_db_command():
-    """Clear the existing data and create new tables."""
+    # Clear the existing data and create new tables.
     init_db()
     click.echo('Initialized the database.')

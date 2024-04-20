@@ -1,3 +1,4 @@
+# pylint: disable=missing-function-docstring,unused-argument,too-many-arguments,line-to-long
 import functools
 
 from flask import (

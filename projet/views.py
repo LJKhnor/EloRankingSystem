@@ -92,8 +92,8 @@ def league():
             for i in enumerate(players_for_league):
                 nb_matches_player = []
                 for j in enumerate(players_for_league):
-                    nb_matches = league_service.get_count_matches(players_for_league[i]['id'],
-                                                                  players_for_league[j]['id'],
+                    nb_matches = league_service.get_count_matches(players_for_league[i[0]]['id'],
+                                                                  players_for_league[j[0]]['id'],
                                                                   league_id)
                     nb_matches_player.append(nb_matches[0])
                 nb_matches_html.append(nb_matches_player)
@@ -146,10 +146,10 @@ def new_match():
             add_new_match_with_elo(deck_player_1_id, deck_player_2_id, i, league_id, player_1_id, player_2_id,
                                    winner_id)
 
-            player_service.save_players_elo(i.getPlayer(player_1_id).name, i.getPlayerRating(player_1_id), league_id)
-            deck_service.save_deck_elo(i.getDeck(deck_player_1_id).name, league_id, i.getDeckRating(deck_player_1_id))
-            player_service.save_players_elo(i.getPlayer(player_2_id).name, i.getPlayerRating(player_2_id), league_id)
-            deck_service.save_deck_elo(i.getDeck(deck_player_2_id).name, league_id, i.getDeckRating(deck_player_2_id))
+            player_service.save_players_elo(i.get_player(player_1_id).name, i.get_player_rating(player_1_id), league_id)
+            deck_service.save_deck_elo(i.get_deck(deck_player_1_id).name, league_id, i.get_deck_rating(deck_player_1_id))
+            player_service.save_players_elo(i.get_player(player_2_id).name, i.get_player_rating(player_2_id), league_id)
+            deck_service.save_deck_elo(i.get_deck(deck_player_2_id).name, league_id, i.get_deck_rating(deck_player_2_id))
 
             match_service.save_new_match(league_id, date, player_1_id, player_2_id, deck_player_1_id, deck_player_2_id,
                                          winner_id)
@@ -234,16 +234,15 @@ def rejeu():
                 add_new_match_with_elo(deck_player_1_id, deck_player_2_id, i, league_id, player_1_id, player_2_id,
                                        winner_id)
 
-                player_service.save_players_elo(i.getPlayer(player_1_id).name, i.getPlayerRating(player_1_id),
+                player_service.save_players_elo(i.get_player(player_1_id).name, i.get_player_rating(player_1_id),
                                                 league_id)
-                deck_service.save_deck_elo(i.getDeck(deck_player_1_id).name, league_id,
-                                           i.getDeckRating(deck_player_1_id))
-                player_service.save_players_elo(i.getPlayer(player_2_id).name, i.getPlayerRating(player_2_id),
+                deck_service.save_deck_elo(i.get_deck(deck_player_1_id).name, league_id,
+                                           i.get_deck_rating(deck_player_1_id))
+                player_service.save_players_elo(i.get_player(player_2_id).name, i.get_player_rating(player_2_id),
                                                 league_id)
-                deck_service.save_deck_elo(i.getDeck(deck_player_2_id).name, league_id,
-                                           i.getDeckRating(deck_player_2_id))
-        else:
-            LOG.error(error)
+                deck_service.save_deck_elo(i.get_deck(deck_player_2_id).name, league_id,
+                                           i.get_deck_rating(deck_player_2_id))
+        LOG.error(error)
 
         return redirect(url_for('league'))
 
@@ -258,11 +257,11 @@ def add_new_match_with_elo(deck_player_1_id, deck_player_2_id, i, league_id, pla
     elo_deck_1 = deck_service.get_elo_by_ids(deck_player_1_id, league_id)
     elo_deck_2 = deck_service.get_elo_by_ids(deck_player_2_id, league_id)
     # insérer dans Implementation les joueur, leur rating et leurs decks
-    i.addPlayer(player_1_id, None if elo_player_1 is None else elo_player_1['elo'])
-    i.addPlayer(player_2_id, None if elo_player_2 is None else elo_player_2['elo'])
-    i.addDeck(deck_player_1_id, None if elo_deck_1 is None else elo_deck_1['elo'])
-    i.addDeck(deck_player_2_id, None if elo_deck_2 is None else elo_deck_2['elo'])
-    i.processEloForMatch(player_1_id, deck_player_1_id, player_2_id, deck_player_2_id, winner=winner_id)
+    i.add_player(player_1_id, None if elo_player_1 is None else elo_player_1['elo'])
+    i.add_player(player_2_id, None if elo_player_2 is None else elo_player_2['elo'])
+    i.add_deck(deck_player_1_id, None if elo_deck_1 is None else elo_deck_1['elo'])
+    i.add_deck(deck_player_2_id, None if elo_deck_2 is None else elo_deck_2['elo'])
+    i.process_elo_for_match(player_1_id, deck_player_1_id, player_2_id, deck_player_2_id, winner=winner_id)
 
     elo_player_1 = 0 if elo_player_1 is None else elo_player_1['elo']
     elo_player_2 = 0 if elo_player_2 is None else elo_player_2['elo']

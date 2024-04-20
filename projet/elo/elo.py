@@ -1,3 +1,4 @@
+# pylint: disable=missing-function-docstring,unused-argument,too-many-arguments,line-to-long
 """
 Created 06-01-2024
 All of the classes for EloPy. The users should only interact with the Implementation class.
@@ -5,9 +6,9 @@ All of the classes for EloPy. The users should only interact with the Implementa
 """
 
 from flask import Flask
+
 from ..model.deck import _Deck
 from ..model.player import _Player
-import logging
 
 app = Flask(__name__)
 LOG = app.logger
@@ -27,21 +28,21 @@ class Implementation:
         self.players = []
         self.decks = []
 
-    def __getPlayerList(self):
+    def __get_player_list(self):
         """
         Returns this implementation's player list.
         @return - the list of all player objects in the implementation.
         """
         return self.players
 
-    def __getDeckList(self):
+    def __get_deck_list(self):
         """
         Returns this implementation's decks list.
         @return - the list of all deck objects in the implementation.
         """
         return self.decks
 
-    def getPlayer(self, name):
+    def get_player(self, name):
         """
         Returns the player in the implementation with the given name.
         @param name - name of the player to return.
@@ -52,7 +53,7 @@ class Implementation:
                 return player
         return None
 
-    def getDeck(self, name):
+    def get_deck(self, name):
         """
         Returns the deck in the implementation with the given name.
         @param name - name of the deck to return.
@@ -63,13 +64,13 @@ class Implementation:
                 return deck
         return None
 
-    def getPlayers(self, players):
+    def get_players(self, players):
         """
         Return all the players in the list
         """
         return " ,".join(players)
 
-    def getDecks(self, decks):
+    def get_decks(self, decks):
         """
         Return all the decks in the list
         """
@@ -86,7 +87,7 @@ class Implementation:
                 return True
         return False
 
-    def addPlayer(self, name, rating=None):
+    def add_player(self, name, rating=None):
         """
         Adds a new player to the implementation.
         @param name - The name to identify a specific player.
@@ -97,7 +98,7 @@ class Implementation:
 
         self.players.append(_Player(name=name, rating=rating))
 
-    def addDeck(self, name, rating=None):
+    def add_deck(self, name, rating=None):
         """
         Adds a new deck to the implementation.
         @param name - The name to identify a specific deck.
@@ -108,39 +109,39 @@ class Implementation:
 
         self.decks.append(_Deck(name=name, rating=rating))
 
-    def addPlayers(self, players, rating=None):
+    def add_players(self, players, rating=None):
         """
         Add a list of players to the implementation class
         @param players - the players list
         @param rating - the global rating for all players
         """
         for player in players:
-            self.addPlayer(player, rating)
+            self.add_player(player, rating)
 
-    def addDecks(self, decks, rating=None):
+    def add_decks(self, decks, rating=None):
         """
         Add a list of decks to the implementation class
         @param decks - the decks list
         @param rating - the global rating for all decks
         """
         for deck in decks:
-            self.addDeck(deck, rating)
+            self.add_deck(deck, rating)
 
-    def removePlayer(self, name):
+    def remove_player(self, name):
         """
         Adds a new player to the implementation.
         @param name - The name to identify a specific player.
         """
-        self.__getPlayerList().remove(self.getPlayer(name))
+        self.__get_player_list().remove(self.get_player(name))
 
-    def removeDeck(self, name):
+    def remove_deck(self, name):
         """
         Remove a deck to the implementation.
         @param name - The name to identify a specific deck.
         """
-        self.__getDeckList().remove(self.getDeck(name))
+        self.__get_deck_list().remove(self.get_deck(name))
 
-    def processEloForMatch(self, name1, deckName1, name2, deckName2, winner=None, draw=False):
+    def process_elo_for_match(self, name1, deck_name1, name2, deck_name2, winner=None, draw=False):
         """
         Should be called after a game is played.
         @param name1 - name of the first player.
@@ -155,22 +156,22 @@ class Implementation:
         for deck in self.decks:
             decks.append(deck.name)
 
-        if (name1 in players and name2 in players and deckName1 in decks and deckName2 in decks):
+        if (name1 in players and name2 in players and deck_name1 in decks and deck_name2 in decks):
 
-            player1 = self.getPlayer(name1)
-            player2 = self.getPlayer(name2)
-            deck1 = self.getDeck(deckName1)
-            deck2 = self.getDeck(deckName2)
+            player1 = self.get_player(name1)
+            player2 = self.get_player(name2)
+            deck1 = self.get_deck(deck_name1)
+            deck2 = self.get_deck(deck_name2)
 
-            expected1 = player1.compareRating(player2)
-            expected2 = player2.compareRating(player1)
-            deckExpected1 = deck1.compareRating(deck2)
-            deckExpected2 = deck2.compareRating(deck1)
+            expected1 = player1.compare_rating(player2)
+            expected2 = player2.compare_rating(player1)
+            deck_expected1 = deck1.compare_rating(deck2)
+            deck_expected2 = deck2.compare_rating(deck1)
 
             rating1 = player1.rating
             rating2 = player2.rating
-            deckRating1 = deck1.rating
-            deckRating2 = deck2.rating
+            deck_rating1 = deck1.rating
+            deck_rating2 = deck2.rating
 
             if draw:
                 score1 = 0.5
@@ -192,8 +193,8 @@ class Implementation:
 
             newRating1 = rating1 + self.process_k(player1) * (score1 - expected1)
             newRating2 = rating2 + self.process_k(player2) * (score2 - expected2)
-            newDeckRating1 = deckRating1 + self.process_k(deck1) * (deckScore1 - deckExpected1)
-            newDeckRating2 = deckRating2 + self.process_k(deck2) * (deckScore2 - deckExpected2)
+            newDeckRating1 = deck_rating1 + self.process_k(deck1) * (deckScore1 - deck_expected1)
+            newDeckRating2 = deck_rating2 + self.process_k(deck2) * (deckScore2 - deck_expected2)
 
             if newRating1 < 0:
                 newRating1 = 0
@@ -205,7 +206,7 @@ class Implementation:
 
             if newDeckRating1 < 0:
                 newDeckRating1 = 0
-                newDeckRating2 = deckRating2 - deckRating1
+                newDeckRating2 = deck_rating2 - deck_rating1
 
             if newDeckRating2 < 0:
                 newDeckRating2 = 0
@@ -233,40 +234,40 @@ class Implementation:
         else:
             return 10
 
-    def getPlayerRating(self, name):
+    def get_player_rating(self, name):
         """
         Returns the rating of the player with the given name.
         @param name - name of the player.
         @return - the rating of the player with the given name.
         """
-        player = self.getPlayer(name)
+        player = self.get_player(name)
         return player.rating
 
-    def getDeckRating(self, name):
+    def get_deck_rating(self, name):
         """
         Returns the rating of the deck with the given name.
         @param name - name of the deck.
         @return - the rating of the deck with the given name.
         """
-        deck = self.getDeck(name)
+        deck = self.get_deck(name)
         return deck.rating
 
-    def getPlayersRatingList(self):
+    def get_players_rating_list(self):
         """
         Returns a list of tuples in the form of ({name},{rating})
         @return - the list of tuples
         """
         lst = []
-        for player in self.__getPlayerList():
+        for player in self.__get_player_list():
             lst.append((player.name, round(player.rating, 2)))
         return sorted(lst, key=lambda player: player[1], reverse=True)
 
-    def getDecksRatingList(self):
+    def get_decks_rating_list(self):
         """
         Returns a list of tuples in the form of ({name},{rating})
         @return - the list of tuples
         """
         lst = []
-        for deck in self.__getDeckList():
+        for deck in self.__get_deck_list():
             lst.append((deck.name, round(deck.rating, 2)))
         return sorted(lst, key=lambda deck: deck[1], reverse=True)

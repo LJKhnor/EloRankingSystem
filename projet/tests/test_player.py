@@ -1,5 +1,7 @@
 import unittest
+
 from projet.model.player import _Player
+
 
 @unittest.skip("Need to be fixed")
 class TestPlayer(unittest.TestCase):
@@ -9,17 +11,17 @@ class TestPlayer(unittest.TestCase):
         self.player2 = _Player("Player 2", 1500.00)
 
     def test_compareRating(self):
-        self.assertEqual(self.player1.compareRating(self.player2), 0.5)
-        self.assertEqual(self.player2.compareRating(self.player1), 0.5)
+        self.assertEqual(self.player1.compare_rating(self.player2), 0.5)
+        self.assertEqual(self.player2.compare_rating(self.player1), 0.5)
 
         self.player2.rating = 1600
-        self.assertEqual(self.player1.compareRating(self.player2), 0.35993500019711494)
+        self.assertEqual(self.player1.compare_rating(self.player2), 0.35993500019711494)
 
         self.player2.rating = 1400
-        self.assertEqual(self.player1.compareRating(self.player2), 0.6400649998028851)
+        self.assertEqual(self.player1.compare_rating(self.player2), 0.6400649998028851)
 
         self.player2.rating = 1250
-        self.assertEqual(self.player1.compareRating(self.player2), 0.8083176725494586)
+        self.assertEqual(self.player1.compare_rating(self.player2), 0.8083176725494586)
 
     def test_str(self):
         self.assertEqual(str(self.player1), "Player 1 (1500.0)")
