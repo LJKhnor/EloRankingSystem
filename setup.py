@@ -2,7 +2,7 @@
 from setuptools import setup
 
 setup(name="EloRankingSystem",
-      version="0.1",
+      version="0.2",
       description="A python application for the Elo Rating System",
       long_description="""
       A python application for the Elo Rating System
