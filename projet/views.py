@@ -1,6 +1,5 @@
 """Views module"""
-# pylint: disable=missing-function-docstring
-# pylint: disable=unused-argument
+# pylint: disable=missing-function-docstring,unused-argument,too-many-arguments,line-to-long
 import logging
 
 from flask import Flask, render_template, request, session, redirect, url_for
@@ -14,7 +13,8 @@ from .utils import utils
 
 # import csv
 
-logging.basicConfig(level=logging.DEBUG, format='%(asctime)s : [%(levelname)s] %(name)s %(threadName)s : %(message)s')
+logging.basicConfig(level=logging.DEBUG,
+                    format='%(asctime)s : [%(levelname)s] %(name)s %(threadName)s : %(message)s')
 logging.getLogger('werkzeug').setLevel(logging.ERROR)
 
 app = Flask(__name__)
@@ -29,7 +29,6 @@ LOG = app.logger
 @bp_business.route('/')
 @login_required
 def index():
-    
     LOG.info(""" Home route""")
     if request.method == 'GET':
         matches = match_service.get_last_five_matches()
@@ -55,7 +54,6 @@ def index():
 @bp_business.route('/league', methods=('GET', 'POST'))
 @login_required
 def league():
-    
     LOG.info(""" league page route""")
 
     leagues = league_service.get_all_leagues()
@@ -108,7 +106,6 @@ def league():
 
 @bp_business.route('/new_match', methods=('GET', 'POST'))
 def new_match():
-    
     LOG.info(""" new match route """)
     i = elo.Implementation()
 
@@ -170,7 +167,6 @@ def new_match():
 @bp_business.route('/new_league', methods=('GET', 'POST'))
 @login_required
 def new_league():
-    
     LOG.info(""" new league route """)
 
     if request.method == 'POST':
@@ -204,8 +200,6 @@ def new_league():
 @bp_business.route('/rejeu', methods=('GET', 'POST'))
 @login_required
 def rejeu():
-    
-
     # Outils de rejeu pour corriger l'ajout malencontreux via l'appli qui impacterait négativement le calcul de l'elo
     LOG.info("""Outil de rejeu""")
     leagues = league_service.get_all_leagues()
