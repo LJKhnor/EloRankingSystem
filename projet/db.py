@@ -1,4 +1,3 @@
-# pylint: disable=missing-function-docstring, unused-argument, too-many-arguments
 import sqlite3
 
 import click
