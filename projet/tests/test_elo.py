@@ -3,7 +3,6 @@ import unittest
 from projet.elo.elo import Implementation
 
 
-@unittest.skip("need to be fixed")
 class TestImplementation(unittest.TestCase):
 
     def setUp(self):
@@ -118,20 +117,20 @@ class TestImplementation(unittest.TestCase):
         self.impl.add_players(["Player 1", "Player 2"])
         self.impl.add_decks(["Deck 1", "Deck 2"])
         self.impl.process_elo_for_match("Player 1", "Deck 1", "Player 2", "Deck 2", winner="Player 1")
-        self.assertEqual(self.impl.get_player("Player 1").rating, 1042.0)
-        self.assertEqual(self.impl.get_player("Player 2").rating, 958.0)
-        self.assertEqual(self.impl.get_deck("Deck 1").rating, 1042.0)
-        self.assertEqual(self.impl.get_deck("Deck 2").rating, 958.0)
+        self.assertEqual(self.impl.get_player("Player 1").rating, 1020.0)
+        self.assertEqual(self.impl.get_player("Player 2").rating, 980.0)
+        self.assertEqual(self.impl.get_deck("Deck 1").rating, 1020.0)
+        self.assertEqual(self.impl.get_deck("Deck 2").rating, 980.0)
         self.impl.process_elo_for_match("Player 1", "Deck 2", "Player 2", "Deck 1", winner="Player 2")
-        self.assertEqual(self.impl.get_player("Player 1").rating, 990.0389337445214)
-        self.assertEqual(self.impl.get_player("Player 2").rating, 1009.9610662554786)
-        self.assertEqual(self.impl.get_deck("Deck 1").rating, 1074.0389337445215)
-        self.assertEqual(self.impl.get_deck("Deck 2").rating, 925.9610662554786)
+        self.assertEqual(self.impl.get_player("Player 1").rating, 997.7075346495083)
+        self.assertEqual(self.impl.get_player("Player 2").rating, 1002.2924653504917)
+        self.assertEqual(self.impl.get_deck("Deck 1").rating, 1037.7075346495083)
+        self.assertEqual(self.impl.get_deck("Deck 2").rating, 962.2924653504917)
         self.impl.process_elo_for_match("Player 1", "Deck 1", "Player 2", "Deck 2", draw=True)
-        self.assertEqual(self.impl.get_player("Player 1").rating, 992.4445990466214)
-        self.assertEqual(self.impl.get_player("Player 2").rating, 1007.5554009533786)
-        self.assertEqual(self.impl.get_deck("Deck 1").rating, 1057.1489407522918)
-        self.assertEqual(self.impl.get_deck("Deck 2").rating, 942.8510592477083)
+        self.assertEqual(self.impl.get_player("Player 1").rating, 997.9714491567914)
+        self.assertEqual(self.impl.get_player("Player 2").rating, 1002.0285508432086)
+        self.assertEqual(self.impl.get_deck("Deck 1").rating, 1033.4332138921964)
+        self.assertEqual(self.impl.get_deck("Deck 2").rating, 966.5667861078035)
 
     def test_getPlayerRating(self):
         self.impl.add_players(["Player 1", "Player 2"])
@@ -139,8 +138,8 @@ class TestImplementation(unittest.TestCase):
         self.assertEqual(self.impl.get_player_rating("Player 1"), 1000)
         self.assertEqual(self.impl.get_player_rating("Player 2"), 1000)
         self.impl.process_elo_for_match("Player 1", "Deck 1", "Player 2", "Deck 2", winner="Player 1")
-        self.assertEqual(self.impl.get_player_rating("Player 1"), 1042.0)
-        self.assertEqual(self.impl.get_player_rating("Player 2"), 958.0)
+        self.assertEqual(self.impl.get_player_rating("Player 1"), 1020.0)
+        self.assertEqual(self.impl.get_player_rating("Player 2"), 980.0)
 
     def test_getDeckRating(self):
         self.impl.add_players(["Player 1", "Player 2"])
@@ -148,5 +147,5 @@ class TestImplementation(unittest.TestCase):
         self.assertEqual(self.impl.get_deck_rating("Deck 1"), 1000)
         self.assertEqual(self.impl.get_deck_rating("Deck 2"), 1000)
         self.impl.process_elo_for_match("Player 1", "Deck 1", "Player 2", "Deck 2", winner="Player 1")
-        self.assertEqual(self.impl.get_deck_rating("Deck 1"), 1042.0)
-        self.assertEqual(self.impl.get_deck_rating("Deck 2"), 958.0)
+        self.assertEqual(self.impl.get_deck_rating("Deck 1"), 1020.0)
+        self.assertEqual(self.impl.get_deck_rating("Deck 2"), 980.0)

@@ -3,7 +3,6 @@ import unittest
 from projet.model.player import _Player
 
 
-@unittest.skip("Need to be fixed")
 class TestPlayer(unittest.TestCase):
 
     def setUp(self):
@@ -26,6 +25,7 @@ class TestPlayer(unittest.TestCase):
     def test_str(self):
         self.assertEqual(str(self.player1), "Player 1 (1500.0)")
         self.assertEqual(str(self.player2), "Player 2 (1500.0)")
+
 
 if __name__ == '__main__':
     unittest.main()

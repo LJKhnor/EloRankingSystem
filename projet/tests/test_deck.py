@@ -3,7 +3,6 @@ import unittest
 from projet.model.deck import _Deck
 
 
-@unittest.skip("Need to be fixed")
 class TestDeck(unittest.TestCase):
 
     def setUp(self):
@@ -26,6 +25,7 @@ class TestDeck(unittest.TestCase):
     def test_str(self):
         self.assertEqual(str(self.deck1), "deck 1 (1500.0)")
         self.assertEqual(str(self.deck2), "deck 2 (1500.0)")
+
 
 if __name__ == '__main__':
     unittest.main()
