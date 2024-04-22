@@ -130,16 +130,16 @@
                 <caption class="caption">Nombre de matchs joués</caption>
                 <tr>
                     <th></th>
-                    {% for item in playersForLeague %}
+                    {% for item in players_for_league %}
                     <th>{{ item[1] }}</th>
                     {% endfor %}
                 </tr>
-                {% for j in range(playersForLeague.__len__()) %}
+                {% for j in range(players_for_league.__len__()) %}
                 <tr>
                     <td id="nested-{{j}}">
                         <table id="table-{{j}}">
                             <tr>
-                                <th>{{ playersForLeague[j][1] }}</th>
+                                <th>{{ players_for_league[j][1] }}</th>
                             </tr>
                         </table>
                     </td>

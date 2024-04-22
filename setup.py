@@ -1,7 +1,8 @@
+"""File providing setup for the project"""
 from setuptools import setup
 
 setup(name="EloRankingSystem",
-      version="0.1",
+      version="0.2",
       description="A python application for the Elo Rating System",
       long_description="""
       A python application for the Elo Rating System
@@ -17,9 +18,8 @@ setup(name="EloRankingSystem",
       include_package_data=True,
       license="MIT",
       classifiers=[
-         "Development Status :: 5 - Production/Stable",
-         "Topic :: Utilities",
-         "License :: OSI Approved :: MIT License"
+          "Development Status :: 5 - Production/Stable",
+          "Topic :: Utilities",
+          "License :: OSI Approved :: MIT License"
       ]
       )
-
