@@ -1,0 +1,19 @@
+Index: projet/services/UserService.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>from flask import session, request\r\nfrom .. import db\r\n\r\n\r\ndef get_user_by_id():\r\n    user_id = session.get('user_id')\r\n    return db.get_db().execute(\r\n        'SELECT * FROM user WHERE id = ?', (user_id,)\r\n    ).fetchone()\r\n\r\n\r\ndef get_user_by_email():\r\n    email = request.form['email']\r\n    return db.get_db().execute(\r\n        'SELECT * FROM user WHERE email = ?', (email,)\r\n    ).fetchone()\r\n\r\n\r\ndef get_user_id_by_username():\r\n    username = request.form['username']\r\n    return db.get_db().execute(\r\n        'SELECT id FROM user WHERE username = ?', (username,)\r\n    ).fetchone()\r\n\r\n\r\ndef create_or_update_user(username, password, email):\r\n    my_db.execute(\r\n        'INSERT INTO user (username, email, password) VALUES (?, ?, ?)',\r\n        (username, email, password)\r\n    )\r\n    db.get_db().commit()\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/projet/services/UserService.py b/projet/services/UserService.py
+--- a/projet/services/UserService.py	(revision cd7e86260aa9c90b5fe00e0b810fb62639724500)
++++ b/projet/services/UserService.py	(date 1705680210574)
+@@ -24,7 +24,7 @@
+ 
+ 
+ def create_or_update_user(username, password, email):
+-    my_db.execute(
++    return db.get_db().execute(
+         'INSERT INTO user (username, email, password) VALUES (?, ?, ?)',
+         (username, email, password)
+     )
