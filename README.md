@@ -1,13 +1,17 @@
 <!-- TOC -->
 # Table of content
-* [EloRankingSystem](#elorankingsystem)
-  * [What is the Elo Rating System?](#what-is-the-elo-rating-system)
-  * [Calculations](#calculations)
-* [Project configuration and how to run](#project-configuration-and-how-to-run)
-  * [Setup dev environment](#setup-dev-environment-)
-    * [.venv](#venv)
-    * [Install dependencies](#install-dependencies)
-  * [Install Flask](#install-flask-)
+- [Table of content](#table-of-content)
+- [EloRankingSystem](#elorankingsystem)
+  - [What is the Elo Rating System?](#what-is-the-elo-rating-system)
+  - [Calculations](#calculations)
+- [Project configuration and how to run](#project-configuration-and-how-to-run)
+  - [Setup dev environment](#setup-dev-environment)
+    - [.venv](#venv)
+    - [Install dependencies](#install-dependencies)
+  - [Application Structure](#application-structure)
+  - [Install Flask](#install-flask)
+  - [Install DB](#install-db)
+  - [Feed DB](#feed-db)
 <!-- TOC -->
 
 # EloRankingSystem
@@ -56,9 +60,10 @@ Your requirements.txt is here to concentrate your dependencies.
 You can install those dependencies with the next command.
 Run `pip install -r requirements.txt`
 
-Your application will start when you run your app.py file with all the configuration put in your .venv
+Your application will start when you run your app.py file with all the configuration put in your .venv with this command
+`py app.py`
 
-you are now in your dev environment
+you are now in your dev environment and can access to the web page here -> `localhost:5000`
 
 ## Application Structure
 Flask is a framework that provide a lot of fonctionnalities.
