@@ -2,6 +2,7 @@
 # Table of content
 - [Table of content](#table-of-content)
 - [EloRankingSystem](#elorankingsystem)
+  - [Overview](#overview)
   - [What is the Elo Rating System?](#what-is-the-elo-rating-system)
   - [Calculations](#calculations)
 - [Project configuration and how to run](#project-configuration-and-how-to-run)
@@ -20,7 +21,20 @@ A python application for the Elo Rating. It provide a backend system to manage E
 This code originally come from https://github.com/HankSheehan/EloPy
 Originally create as a librairy, it contain only one simply file.
 So to integrate this code directly in a application, the development 
-will be integrate around.
+will be integrate around. Some changes had to be make to be more accurate for our needs.
+
+## Overview
+Game and league management screen
+![Game and league management screen](/projet/static/logo/écran%20acceuil%20Elo%20Ranking%20System.png "Game and league management screen")
+
+New match screen
+![New match screen](/projet/static/logo/écran%20nouveaux%20match%20ERS.png "New match screen")
+
+New league screen
+![New league screen](/projet/static/logo/écran%20nouvelle%20league%20ERS.png "New league screen")
+
+Statistics dashboard league screen
+![Statistics dashboard leaguescreen](/projet/static/logo/écran%20stat%20ERS.png "Statistics dashboard league screen")
 
 ## What is the Elo Rating System?
 * The Elo Rating System (Elo) is a rating system used for rating players in games. Originally developed for chess by Arpad Elo, Elo has been applied to a large array of games.
