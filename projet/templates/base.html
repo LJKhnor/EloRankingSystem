@@ -25,21 +25,25 @@
   {% from 'navbar.html' import navbar %}
   {{ navbar() }}
   <h1 class="title has-text-centered m-4" input type="text"> Elo Ranking System </h1>
-  <div class="container is-fluid" style="">
+  <div class="container is-fluid" >
     <div class="content">
       {% block content %} {% endblock %}
     </div>
   </div>
   <footer class="footer is-fixed-bottom" style="padding: 0.5rem">
     <div class="content has-text-centered">
-      <p>Application created by some ATS developer for their Brutal Magic competition</p>
-      <p>
-        <strong> Christopher </strong> /
-        <strong> Gilles </strong> /
-        <strong> Joachim </strong> /
-        <strong> Julien Laurent </strong> /
-        <strong> Julien Lejeune </strong>
-      </p>
+      <span>
+        <p>Application created by some MTG lover for their Brutal Magic competition</p>
+        <p>
+          <p>Developper :<strong> Joachim </strong></p>
+        </p>
+        <p>Beta tester :
+          <strong> Christopher </strong> /
+          <strong> Gilles </strong> /
+          <strong> Julien Laurent </strong> /
+          <strong> Julien Lejeune </strong>
+        </p>
+      </span>
       <a href="http://opensource.org/licenses/mit-license.php">MIT</a>. The website content
       is licensed <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY NC SA 4.0</a>.
     </div>
